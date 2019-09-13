@@ -25,7 +25,7 @@ public class UserController {
     @GetMapping("/user")
     ResponseEntity<List<UserDto>> getAllUsers(){
         return ResponseEntity.ok(
-                userService.getAll().stream()
+                userService.findAll().stream()
                 .map(user -> conversionService.convert(user, UserDto.class))
                 .collect(Collectors.toList())
         );
@@ -33,6 +33,6 @@ public class UserController {
 
     @GetMapping("/user/{id}")
     ResponseEntity<UserDto> getOneById(@PathVariable Long id){
-        return ResponseEntity.ok(conversionService.convert(userService.getOne(id), UserDto.class));
+        return ResponseEntity.ok(conversionService.convert(userService.findById(id), UserDto.class));
     }
 }

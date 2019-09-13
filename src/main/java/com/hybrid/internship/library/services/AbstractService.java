@@ -5,9 +5,9 @@ import java.util.List;
 
 public interface AbstractService<E, P>{
 
-    List<E> getAll();
+    List<E> findAll();
 
-    E getOne(P id);
+    E findById(P id);
 
     E create(E e);
 

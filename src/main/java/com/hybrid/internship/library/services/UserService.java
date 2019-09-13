@@ -7,9 +7,9 @@ import java.util.List;
 
 public interface UserService extends AbstractService<User, Long> {
 
-    List<User> getAll();
+    List<User> findAll();
 
-    User getOne(Long id);
+    User findById(Long id);
 
     User create(User user); //Dto zbog password
 

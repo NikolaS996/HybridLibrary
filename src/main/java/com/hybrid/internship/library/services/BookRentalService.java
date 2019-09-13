@@ -6,15 +6,13 @@ import java.util.List;
 
 public interface BookRentalService extends AbstractService<BookRental, Long>{
 
-    List<BookRental> getAll();
+    List<BookRental> findAll();
 
-    BookRental getOne(Long id);
+    BookRental findById(Long id);
 
     BookRental create(BookRental bookRental);
 
     BookRental update(BookRental bookRental);
-
-    //void delete(Long id); // da li je potreban delete?
 
     boolean exists(Long id);
 }

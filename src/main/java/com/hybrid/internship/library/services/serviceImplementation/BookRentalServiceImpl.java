@@ -1,38 +1,43 @@
 package com.hybrid.internship.library.services.serviceImplementation;
 
 import com.hybrid.internship.library.models.BookRental;
+import com.hybrid.internship.library.repositories.BookRentalRepository;
 import com.hybrid.internship.library.services.BookRentalService;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
 public class BookRentalServiceImpl implements BookRentalService {
+
+    @Autowired
+    BookRentalRepository bookRentalRepository;
+
     @Override
-    public List<BookRental> getAll() {
-        return null;
+    public List<BookRental> findAll() {
+        return bookRentalRepository.findAll();
     }
 
     @Override
-    public BookRental getOne(Long id) {
-        return null;
+    public BookRental findById(Long id) {
+        return bookRentalRepository.findById(id).orElseGet(() -> null);
     }
 
     @Override
     public BookRental create(BookRental bookRental) {
-        return null;
+        return bookRentalRepository.save(bookRental);
     }
 
     @Override
     public BookRental update(BookRental bookRental) {
-        return null;
+        return bookRentalRepository.save(bookRental);
     }
 
     @Override
     public void delete(Long id) {
-
     }
 
     @Override
     public boolean exists(Long id) {
-        return false;
+        return bookRentalRepository.existsById(id);
     }
 }

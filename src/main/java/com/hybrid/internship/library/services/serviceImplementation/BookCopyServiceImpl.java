@@ -1,43 +1,49 @@
 package com.hybrid.internship.library.services.serviceImplementation;
 
 import com.hybrid.internship.library.models.BookCopy;
+import com.hybrid.internship.library.repositories.BookCopyRepository;
 import com.hybrid.internship.library.services.BookCopyService;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
 public class BookCopyServiceImpl implements BookCopyService {
+
+    @Autowired
+    BookCopyRepository bookCopyRepository;
+
     @Override
-    public List<BookCopy> getAll() {
-        return null;
+    public List<BookCopy> findAll() {
+        return bookCopyRepository.findAll();
     }
 
     @Override
     public List<BookCopy> findAllByBookId(Long id) {
-        return null;
+        return bookCopyRepository.findAllByBookId(id);
     }
 
     @Override
-    public BookCopy getOne(Long id) {
-        return null;
+    public BookCopy findById(Long id) {
+        return bookCopyRepository.findById(id).orElseGet(() -> null);
     }
 
     @Override
     public BookCopy create(BookCopy bookCopy) {
-        return null;
+        return bookCopyRepository.save(bookCopy);
     }
 
     @Override
     public BookCopy update(BookCopy bookCopy) {
-        return null;
+        return bookCopyRepository.save(bookCopy);
     }
 
     @Override
     public void delete(Long id) {
-
+        bookCopyRepository.deleteById(id);
     }
 
     @Override
     public boolean exists(Long id) {
-        return false;
+        return bookCopyRepository.existsById(id);
     }
 }

@@ -14,35 +14,32 @@ public class UserServiceImpl implements UserService {
     UserRepository userRepository;
 
     @Override
-    public List<User> getAll() {
-        List<User> users = userRepository.findAll();
-        if(users.isEmpty())
-            return null;
-        return users;
+    public List<User> findAll() {
+        return userRepository.findAll();
     }
 
     @Override
-    public User getOne(Long id) {
-        return null;
+    public User findById(Long id) {
+        return userRepository.findById(id).orElseGet(() -> null);
     }
 
     @Override
     public User create(User user) {
-        return null;
+        return userRepository.save(user);
     }
 
     @Override
     public User update(User user) {
-        return null;
+        return userRepository.save(user);
     }
 
     @Override
     public void delete(Long id) {
-
+        userRepository.deleteById(id);
     }
 
     @Override
     public boolean exists(Long id) {
-        return false;
+        return userRepository.existsById(id);
     }
 }
