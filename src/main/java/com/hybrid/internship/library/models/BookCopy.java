@@ -1,5 +1,6 @@
 package com.hybrid.internship.library.models;
 
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -9,6 +10,7 @@ import javax.validation.constraints.NotNull;
 @Data
 @Entity
 @NoArgsConstructor
+@Builder
 public class BookCopy extends AbstractModel{
 
     @ManyToOne
@@ -16,6 +18,7 @@ public class BookCopy extends AbstractModel{
     @NotNull
     private Book book;
 
+    @Builder
     public BookCopy(Long id, Book book){
         super(id);
         this.book = book;

@@ -31,26 +31,26 @@ public class UserConverter implements GenericConverter {
 
     private UserDto convertUser(Object o) {
         User user = (User) o;
-        UserDto userDto = new UserDto();
-
-        userDto.setId(user.getId());
-        userDto.setFirstName(user.getFirstName());
-        userDto.setLastName(user.getLastName());
-        userDto.setUsername(user.getEmail());
-        userDto.setEmail(user.getEmail());
+        UserDto userDto = UserDto.builder()
+                .id(user.getId())
+                .firstName((user.getFirstName()))
+                .lastName(user.getLastName())
+                .username(user.getUsername())
+                .email(user.getEmail())
+                .build();
         
         return userDto;
     }
 
     private User convertUserDto(Object o) {
         UserDto userDto = (UserDto) o;
-        User user = new User();
-
-        user.setId(userDto.getId());
-        user.setFirstName(userDto.getFirstName());
-        user.setLastName(userDto.getLastName());
-        user.setUsername(userDto.getUsername());
-        user.setEmail(userDto.getEmail());
+        User user = User.builder()
+                .id(userDto.getId())
+                .firstName(userDto.getFirstName())
+                .lastName(userDto.getLastName())
+                .username(userDto.getUsername())
+                .email(userDto.getEmail())
+                .build();
 
         return user;
     }

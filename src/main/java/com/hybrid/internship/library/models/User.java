@@ -11,6 +11,7 @@ import java.util.List;
 @Entity
 @Data
 @NoArgsConstructor
+@Builder
 public class User extends AbstractModel{
 
     @Column
@@ -40,6 +41,7 @@ public class User extends AbstractModel{
     @OneToMany(mappedBy = "books")
     private List<BookRental> rentedCopies;
 
+    @Builder
     public User(Long id, String firstName, String lastName, String username, String password, String email, String role, List<BookRental> rentedCopies){
         super(id);
         this.firstName = firstName;

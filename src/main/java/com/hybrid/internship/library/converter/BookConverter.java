@@ -30,24 +30,24 @@ public class BookConverter implements GenericConverter {
 
     private BookDto convertBook(Object o) {
         Book book = (Book) o;
-        BookDto bookDto = new BookDto();
-
-        bookDto.setId(book.getId());
-        bookDto.setName(book.getName());
-        bookDto.setAuthor(book.getAuthor());
-        bookDto.setRentPeriod(book.getRentPeriod());
+        BookDto bookDto = BookDto.builder()
+                .id(book.getId())
+                .name(book.getName())
+                .author(book.getAuthor())
+                .rentPeriod(book.getRentPeriod())
+                .build();
 
         return bookDto;
     }
 
     private Book convertBookDto(Object o) {
         BookDto bookDto = (BookDto) o;
-        Book book = new Book();
-
-        book.setId(bookDto.getId());
-        book.setName(bookDto.getName());
-        book.setAuthor(bookDto.getAuthor());
-        book.setRentPeriod(bookDto.getRentPeriod());
+        Book book = Book.builder()
+                .id(bookDto.getId())
+                .name(bookDto.getName())
+                .author(bookDto.getAuthor())
+                .rentPeriod(bookDto.getRentPeriod())
+                .build();
 
         return book;
     }

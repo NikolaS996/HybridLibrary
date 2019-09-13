@@ -1,5 +1,6 @@
 package com.hybrid.internship.library.models;
 
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,6 +11,7 @@ import java.time.LocalDate;
 @Entity
 @Data
 @NoArgsConstructor
+@Builder
 //Record for every rental
 public class BookRental extends AbstractModel{
 
@@ -29,6 +31,7 @@ public class BookRental extends AbstractModel{
     @Column(columnDefinition = "boolean default false")
     private Boolean isReturned;
 
+    @Builder
     public BookRental(Long id, User user, BookCopy bookCopy, LocalDate rentedDate, boolean isReturned){
         super(id);
         this.user = user;

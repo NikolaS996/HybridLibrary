@@ -29,20 +29,20 @@ public class BookCopyConverter implements GenericConverter {
 
     private BookCopyDto convertBookCopy(Object o) {
         BookCopy bookCopy = (BookCopy) o;
-        BookCopyDto bookCopyDto = new BookCopyDto();
-
-        bookCopyDto.setId(bookCopy.getId());
-        bookCopyDto.setBook(bookCopy.getBook());
+        BookCopyDto bookCopyDto = BookCopyDto.builder()
+                .id(bookCopy.getId())
+                .book(bookCopy.getBook())
+                .build();
 
         return bookCopyDto;
     }
 
     private BookCopy convertBookCopyDto(Object o) {
         BookCopyDto bookCopyDto = (BookCopyDto) o;
-        BookCopy bookCopy = new BookCopy();
-
-        bookCopy.setId(bookCopyDto.getId());
-        bookCopy.setBook(bookCopyDto.getBook());
+        BookCopy bookCopy = BookCopy.builder()
+                .id(bookCopyDto.getId())
+                .book(bookCopyDto.getBook())
+                .build();
 
         return bookCopy;
     }

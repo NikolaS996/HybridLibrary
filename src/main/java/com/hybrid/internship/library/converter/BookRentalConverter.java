@@ -29,24 +29,24 @@ public class BookRentalConverter implements GenericConverter {
 
     private BookRentalDto convertBookRental(Object o) {
         BookRental bookRental = (BookRental) o;
-        BookRentalDto bookRentalDto = (BookRentalDto) o;
-
-        bookRentalDto.setId(bookRental.getId());
-        bookRentalDto.setUser(bookRental.getUser());
-        bookRentalDto.setBookCopy(bookRental.getBookCopy());
-        bookRentalDto.setRentedDate(bookRental.getRentedDate());
+        BookRentalDto bookRentalDto = BookRentalDto.builder()
+                .id(bookRental.getId())
+                .user(bookRental.getUser())
+                .bookCopy(bookRental.getBookCopy())
+                .rentedDate(bookRental.getRentedDate())
+                .build();
 
         return bookRentalDto;
     }
 
     private BookRental convertBookRentalDto(Object o) {
         BookRentalDto bookRentalDto = (BookRentalDto) o;
-        BookRental bookRental = new BookRental();
-
-        bookRental.setId(bookRentalDto.getId());
-        bookRental.setUser(bookRentalDto.getUser());
-        bookRental.setBookCopy(bookRentalDto.getBookCopy());
-        bookRental.setRentedDate(bookRentalDto.getRentedDate());
+        BookRental bookRental = BookRental.builder()
+                .id(bookRentalDto.getId())
+                .user(bookRentalDto.getUser())
+                .bookCopy(bookRentalDto.getBookCopy())
+                .rentedDate(bookRentalDto.getRentedDate())
+                .build();
 
         return bookRental;
     }

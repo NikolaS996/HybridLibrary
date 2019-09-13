@@ -1,5 +1,6 @@
 package com.hybrid.internship.library.models;
 
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,6 +12,7 @@ import java.util.List;
 @Data
 @Entity
 @NoArgsConstructor
+@Builder
 public class Book extends AbstractModel {
 
     @Column
@@ -28,6 +30,7 @@ public class Book extends AbstractModel {
     @OneToMany(mappedBy = "book")
     private List<BookCopy> rentedCopies;
 
+    @Builder
     public Book(Long id, String name, String author, Integer rentPeriod, List<BookCopy> rentedCopies){
         super(id);
         this.name = name;
