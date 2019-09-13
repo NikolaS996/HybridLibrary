@@ -44,13 +44,20 @@ public class UserConverter implements GenericConverter {
 
     private User convertUserDto(Object o) {
         UserDto userDto = (UserDto) o;
-        User user = User.builder()
-                .id(userDto.getId())
-                .firstName(userDto.getFirstName())
-                .lastName(userDto.getLastName())
-                .username(userDto.getUsername())
-                .email(userDto.getEmail())
-                .build();
+//        User user = User.builder()
+//                .id(userDto.getId())
+//                .firstName(userDto.getFirstName())
+//                .lastName(userDto.getLastName())
+//                .username(userDto.getUsername())
+//                .email(userDto.getEmail())
+//                .build();
+
+        User user = new User();
+        user.setId(userDto.getId());
+        user.setFirstName(userDto.getFirstName());
+        user.setLastName(userDto.getLastName());
+        user.setUsername(user.getUsername());
+        user.setEmail(user.getEmail());
 
         return user;
     }

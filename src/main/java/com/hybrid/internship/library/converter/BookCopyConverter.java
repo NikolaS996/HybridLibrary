@@ -39,10 +39,11 @@ public class BookCopyConverter implements GenericConverter {
 
     private BookCopy convertBookCopyDto(Object o) {
         BookCopyDto bookCopyDto = (BookCopyDto) o;
-        BookCopy bookCopy = BookCopy.builder()
-                .id(bookCopyDto.getId())
-                .book(bookCopyDto.getBook())
-                .build();
+//        BookCopy bookCopy = BookCopy.builder()
+//                .id(bookCopyDto.getId())
+//                .book(bookCopyDto.getBook())
+//                .build();
+        BookCopy bookCopy = new BookCopy();
 
         return bookCopy;
     }

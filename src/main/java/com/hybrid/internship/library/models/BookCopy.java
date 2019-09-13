@@ -1,8 +1,6 @@
 package com.hybrid.internship.library.models;
 
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -10,7 +8,9 @@ import javax.validation.constraints.NotNull;
 @Data
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
 @Builder
+@EqualsAndHashCode(callSuper=false)
 public class BookCopy extends AbstractModel{
 
     @ManyToOne
