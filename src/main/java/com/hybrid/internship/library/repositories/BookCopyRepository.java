@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface BookCopyRepository extends JpaRepository<BookCopy, Long> {
 
-    @Query("SELECT id FROM BookCopy WHERE Book.id = ?1")
+    //@Query("SELECT id FROM BookCopy WHERE Book.id = ?1")
     List<BookCopy> findAllByBookId(Long id);
 }

@@ -40,10 +40,10 @@ public class User extends AbstractModel{
     @NotBlank
     private String role;
 
-    @OneToMany(mappedBy = "books")
+    @OneToMany(mappedBy = "user")
     private List<BookRental> rentedCopies;
 
-    //@Builder
+    @Builder
     public User(Long id, String firstName, String lastName, String username, String password, String email, String role, List<BookRental> rentedCopies){
         super(id);
         this.firstName = firstName;

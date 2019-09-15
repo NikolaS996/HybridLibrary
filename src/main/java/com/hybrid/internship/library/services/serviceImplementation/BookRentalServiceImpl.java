@@ -4,9 +4,11 @@ import com.hybrid.internship.library.models.BookRental;
 import com.hybrid.internship.library.repositories.BookRentalRepository;
 import com.hybrid.internship.library.services.BookRentalService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class BookRentalServiceImpl implements BookRentalService {
 
     @Autowired

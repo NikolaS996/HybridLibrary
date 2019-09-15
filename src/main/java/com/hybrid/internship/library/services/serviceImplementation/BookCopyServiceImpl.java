@@ -4,9 +4,11 @@ import com.hybrid.internship.library.models.BookCopy;
 import com.hybrid.internship.library.repositories.BookCopyRepository;
 import com.hybrid.internship.library.services.BookCopyService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class BookCopyServiceImpl implements BookCopyService {
 
     @Autowired

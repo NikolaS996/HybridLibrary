@@ -41,13 +41,12 @@ public class BookRentalConverter implements GenericConverter {
 
     private BookRental convertBookRentalDto(Object o) {
         BookRentalDto bookRentalDto = (BookRentalDto) o;
-//        BookRental bookRental = BookRental.builder()
-//                .id(bookRentalDto.getId())
-//                .user(bookRentalDto.getUser())
-//                .bookCopy(bookRentalDto.getBookCopy())
-//                .rentedDate(bookRentalDto.getRentedDate())
-//                .build();
-        BookRental bookRental = new BookRental();
+        BookRental bookRental = BookRental.builder()
+                .id(bookRentalDto.getId())
+                .user(bookRentalDto.getUser())
+                .bookCopy(bookRentalDto.getBookCopy())
+                .rentedDate(bookRentalDto.getRentedDate())
+                .build();
 
         return bookRental;
     }
