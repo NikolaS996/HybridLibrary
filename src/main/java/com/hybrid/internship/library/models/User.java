@@ -11,7 +11,9 @@ import java.util.List;
 @Entity
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Builder
+@EqualsAndHashCode(callSuper=false)
 public class User extends AbstractModel{
 
     @Column
@@ -38,7 +40,7 @@ public class User extends AbstractModel{
     @NotBlank
     private String role;
 
-    @OneToMany(mappedBy = "books")
+    @OneToMany(mappedBy = "user")
     private List<BookRental> rentedCopies;
 
     @Builder

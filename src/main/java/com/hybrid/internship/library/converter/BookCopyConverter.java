@@ -43,7 +43,6 @@ public class BookCopyConverter implements GenericConverter {
                 .id(bookCopyDto.getId())
                 .book(bookCopyDto.getBook())
                 .build();
-
         return bookCopy;
     }
 

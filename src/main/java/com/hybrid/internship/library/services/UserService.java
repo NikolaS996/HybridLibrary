@@ -11,6 +11,8 @@ public interface UserService extends AbstractService<User, Long> {
 
     User findById(Long id);
 
+    User findByUsername(String username);
+
     User create(User user); //Dto zbog password
 
     User update(User user); //Dto zbog password

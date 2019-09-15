@@ -6,7 +6,6 @@ import com.hybrid.internship.library.models.Book;
 import org.springframework.core.convert.TypeDescriptor;
 import org.springframework.core.convert.converter.GenericConverter;
 
-import java.time.LocalDate;
 import java.util.Set;
 
 public class BookConverter implements GenericConverter {
