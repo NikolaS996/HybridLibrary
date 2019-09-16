@@ -16,15 +16,15 @@ import java.util.List;
 public class Book extends AbstractModel {
 
     @Column
-    @NotBlank
+    @NotBlank(message = "Name can't be blank")
     private String name;
 
     @Column
-    @NotBlank
+    @NotBlank(message = "Author can't be blank")
     private String author;
 
     @Column
-    @NotNull
+    //@NotNull
     private Integer rentPeriod;
 
     @OneToMany(mappedBy = "book")

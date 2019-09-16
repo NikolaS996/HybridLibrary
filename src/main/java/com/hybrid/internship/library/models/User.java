@@ -24,7 +24,7 @@ public class User extends AbstractModel{
     @NotBlank(message = "Last name can't be blank")
     private String lastName;
 
-    @Column
+    @Column(unique = true)
     @NotBlank(message = "Username can't be blank")
     private String username;
 

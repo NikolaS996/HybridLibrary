@@ -14,5 +14,7 @@ public interface BookRentalService extends AbstractService<BookRental, Long>{
 
     BookRental update(BookRental bookRental);
 
+    Integer hasRentedCopies(Long id);
+
     boolean exists(Long id);
 }

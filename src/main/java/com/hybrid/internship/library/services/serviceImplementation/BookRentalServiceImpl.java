@@ -35,6 +35,11 @@ public class BookRentalServiceImpl implements BookRentalService {
     }
 
     @Override
+    public Integer hasRentedCopies(Long id) {
+        return bookRentalRepository.hasRentedCopies(id);
+    }
+
+    @Override
     public void delete(Long id) {
     }
 

@@ -10,6 +10,10 @@ public interface BookService extends AbstractService<Book, Long>{
 
     Book findById(Long id);
 
+    List<Book> findAllByName(String name);
+
+    List<Book> findAllByAuthor(String author);
+
     Book create(Book book);
 
     Book update(Book book);
