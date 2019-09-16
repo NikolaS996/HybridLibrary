@@ -52,13 +52,6 @@ public class UserConverter implements GenericConverter {
                 .email(userDto.getEmail())
                 .build();
 
-//        User user = new User();
-//        user.setId(userDto.getId());
-//        user.setFirstName(userDto.getFirstName());
-//        user.setLastName(userDto.getLastName());
-//        user.setUsername(user.getUsername());
-//        user.setEmail(user.getEmail());
-
         return user;
     }
 }

@@ -1,8 +1,6 @@
 package com.hybrid.internship.library.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,8 +10,9 @@ import java.io.Serializable;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
-@MappedSuperclass
+//@MappedSuperclass
+@Getter
+@Setter
 public abstract class AbstractModel implements Serializable {
 
     @Id

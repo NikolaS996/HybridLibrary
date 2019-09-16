@@ -5,12 +5,12 @@ import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
-@Data
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-@EqualsAndHashCode(callSuper=false)
+@Getter
+@Setter
+//@EqualsAndHashCode(callSuper=false)
 public class BookCopy extends AbstractModel{
 
     @ManyToOne

@@ -12,8 +12,7 @@ import java.util.List;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-@EqualsAndHashCode(callSuper=false)
+//@EqualsAndHashCode(callSuper=false)
 public class Book extends AbstractModel {
 
     @Column

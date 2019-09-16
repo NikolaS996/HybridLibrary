@@ -9,11 +9,11 @@ import javax.validation.constraints.Size;
 import java.util.List;
 
 @Entity
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-@EqualsAndHashCode(callSuper=false)
+@Getter
+@Setter
+//@EqualsAndHashCode(callSuper=false)
 public class User extends AbstractModel{
 
     @Column

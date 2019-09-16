@@ -7,11 +7,11 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-@EqualsAndHashCode(callSuper=false)
+//@EqualsAndHashCode(callSuper=false)
 //Record for every rental
 public class BookRental extends AbstractModel{
 
