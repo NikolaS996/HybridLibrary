@@ -10,7 +10,7 @@ import java.io.Serializable;
 
 @AllArgsConstructor
 @NoArgsConstructor
-//@MappedSuperclass
+@MappedSuperclass
 @Getter
 @Setter
 public abstract class AbstractModel implements Serializable {
