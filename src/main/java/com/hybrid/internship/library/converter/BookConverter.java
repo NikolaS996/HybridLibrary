@@ -13,7 +13,8 @@ public class BookConverter implements GenericConverter {
     @Override
     public Set<ConvertiblePair> getConvertibleTypes() {
         ConvertiblePair[] pairs = new ConvertiblePair[]{
-                new ConvertiblePair(Book.class, BookDto.class)};
+                new ConvertiblePair(Book.class, BookDto.class),
+                new ConvertiblePair(BookDto.class, Book.class)};
         return ImmutableSet.copyOf(pairs);
     }
 

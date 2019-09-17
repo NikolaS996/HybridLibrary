@@ -2,7 +2,6 @@ package com.hybrid.internship.library.converter;
 
 import com.hybrid.internship.library.dtos.UserDto;
 import com.hybrid.internship.library.models.User;
-import lombok.EqualsAndHashCode;
 import org.springframework.core.convert.TypeDescriptor;
 import org.springframework.core.convert.converter.GenericConverter;
 import com.google.common.collect.ImmutableSet;
@@ -15,7 +14,8 @@ public class UserConverter implements GenericConverter {
     @Override
     public Set<ConvertiblePair> getConvertibleTypes() {
         ConvertiblePair[] pairs = new ConvertiblePair[]{
-                new ConvertiblePair(User.class, UserDto.class)};
+                new ConvertiblePair(User.class, UserDto.class),
+                new ConvertiblePair(UserDto.class, User.class)};
         return ImmutableSet.copyOf(pairs);
     }
 

@@ -1,22 +1,22 @@
 package com.hybrid.internship.library.services;
 
-import com.hybrid.internship.library.models.Book;
+import com.hybrid.internship.library.dtos.BookDto;
 
 import java.util.List;
 
-public interface BookService extends AbstractService<Book, Long>{
+public interface BookService extends AbstractService<BookDto, Long>{
 
-    List<Book> findAll();
+    List<BookDto> findAll();
 
-    Book findById(Long id);
+    BookDto findById(Long id);
 
-    List<Book> findAllByName(String name);
+    List<BookDto> findAllByName(String name);
 
-    List<Book> findAllByAuthor(String author);
+    List<BookDto> findAllByAuthor(String author);
 
-    Book create(Book book);
+    BookDto create(BookDto book);
 
-    Book update(Book book);
+    BookDto update(BookDto book);
 
     void delete(Long id);
 

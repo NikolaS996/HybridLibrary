@@ -26,6 +26,7 @@ public class BookRental extends AbstractModel{
     private BookCopy bookCopy;
 
     @Column
+    @NotNull
     private LocalDate rentedDate;
 
     @Column(columnDefinition = "boolean default false")

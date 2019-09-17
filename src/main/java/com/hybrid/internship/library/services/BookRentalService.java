@@ -1,20 +1,20 @@
 package com.hybrid.internship.library.services;
 
-import com.hybrid.internship.library.models.BookRental;
+import com.hybrid.internship.library.dtos.BookRentalDto;
 
 import java.util.List;
 
-public interface BookRentalService extends AbstractService<BookRental, Long>{
+public interface BookRentalService extends AbstractService<BookRentalDto, Long>{
 
-    List<BookRental> findAll();
+    List<BookRentalDto> findAll();
 
-    BookRental findById(Long id);
+    BookRentalDto findById(Long id);
 
-    BookRental create(BookRental bookRental);
+    BookRentalDto create(BookRentalDto bookRental);
 
-    BookRental update(BookRental bookRental);
+    BookRentalDto update(BookRentalDto bookRental);
 
-    Integer hasRentedCopies(Long id);
+    int hasRentedCopies(Long id);
 
     boolean exists(Long id);
 }

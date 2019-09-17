@@ -2,6 +2,8 @@ package com.hybrid.internship.library.converter;
 
 import com.google.common.collect.ImmutableSet;
 import com.hybrid.internship.library.dtos.BookCopyDto;
+import com.hybrid.internship.library.dtos.BookDto;
+import com.hybrid.internship.library.models.Book;
 import com.hybrid.internship.library.models.BookCopy;
 import org.springframework.core.convert.TypeDescriptor;
 import org.springframework.core.convert.converter.GenericConverter;
@@ -13,7 +15,8 @@ public class BookCopyConverter implements GenericConverter {
     @Override
     public Set<ConvertiblePair> getConvertibleTypes() {
         ConvertiblePair[] pairs = new ConvertiblePair[]{
-                new ConvertiblePair(BookCopy.class, BookCopyDto.class)};
+                new ConvertiblePair(BookCopy.class, BookCopyDto.class),
+                new ConvertiblePair(BookCopyDto.class, BookCopy.class)};
         return ImmutableSet.copyOf(pairs);
     }
 
@@ -31,7 +34,12 @@ public class BookCopyConverter implements GenericConverter {
         BookCopy bookCopy = (BookCopy) o;
         BookCopyDto bookCopyDto = BookCopyDto.builder()
                 .id(bookCopy.getId())
-                .book(bookCopy.getBook())
+                .bookDto(BookDto.builder()
+                .id(bookCopy.getBook().getId())
+                .name(bookCopy.getBook().getName())
+                .author(bookCopy.getBook().getAuthor())
+                .rentPeriod(bookCopy.getBook().getRentPeriod())
+                .build())
                 .build();
 
         return bookCopyDto;
@@ -41,7 +49,12 @@ public class BookCopyConverter implements GenericConverter {
         BookCopyDto bookCopyDto = (BookCopyDto) o;
         BookCopy bookCopy = BookCopy.builder()
                 .id(bookCopyDto.getId())
-                .book(bookCopyDto.getBook())
+                .book(Book.builder()
+                .id(bookCopyDto.getBookDto().getId())
+                .name(bookCopyDto.getBookDto().getName())
+                .author(bookCopyDto.getBookDto().getAuthor())
+                .rentPeriod(bookCopyDto.getBookDto().getRentPeriod())
+                .build())
                 .build();
         return bookCopy;
     }

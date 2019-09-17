@@ -1,5 +1,6 @@
 package com.hybrid.internship.library.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -28,6 +29,7 @@ public class Book extends AbstractModel {
     private Integer rentPeriod;
 
     @OneToMany(mappedBy = "book")
+    @JsonBackReference
     private List<BookCopy> rentedCopies;
 
     @Builder

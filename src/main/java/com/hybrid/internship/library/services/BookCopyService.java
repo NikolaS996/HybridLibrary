@@ -1,22 +1,24 @@
 package com.hybrid.internship.library.services;
 
-import com.hybrid.internship.library.models.BookCopy;
+import com.hybrid.internship.library.dtos.BookCopyDto;
 
 import java.util.List;
 
-public interface BookCopyService extends AbstractService<BookCopy, Long> {
+public interface BookCopyService extends AbstractService<BookCopyDto, Long> {
 
-    List<BookCopy> findAll();
+    List<BookCopyDto> findAll();
 
-    List<BookCopy> findAllByBookId(Long id);
+    List<BookCopyDto> findAllByBookId(Long id);
 
-    BookCopy findById(Long id);
+    BookCopyDto findById(Long id);
 
-    BookCopy create(BookCopy bookCopy);
+    BookCopyDto create(BookCopyDto bookCopy);
 
-    BookCopy update(BookCopy bookCopy);
+    BookCopyDto update(BookCopyDto bookCopy);
 
     void delete(Long id);
+
+    void deleteAllByBookId(Long id);
 
     boolean exists(Long id);
 
