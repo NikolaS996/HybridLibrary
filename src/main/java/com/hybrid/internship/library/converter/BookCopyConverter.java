@@ -5,12 +5,20 @@ import com.hybrid.internship.library.dtos.BookCopyDto;
 import com.hybrid.internship.library.dtos.BookDto;
 import com.hybrid.internship.library.models.Book;
 import com.hybrid.internship.library.models.BookCopy;
+import com.hybrid.internship.library.services.serviceImplementation.BookCopyServiceImpl;
+import com.hybrid.internship.library.services.serviceImplementation.BookServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.TypeDescriptor;
 import org.springframework.core.convert.converter.GenericConverter;
 
 import java.util.Set;
 
 public class BookCopyConverter implements GenericConverter {
+
+    @Autowired
+    BookCopyServiceImpl bookCopyService;
+    @Autowired
+    BookServiceImpl bookService;
 
     @Override
     public Set<ConvertiblePair> getConvertibleTypes() {
@@ -35,11 +43,11 @@ public class BookCopyConverter implements GenericConverter {
         BookCopyDto bookCopyDto = BookCopyDto.builder()
                 .id(bookCopy.getId())
                 .bookDto(BookDto.builder()
-                .id(bookCopy.getBook().getId())
-                .name(bookCopy.getBook().getName())
-                .author(bookCopy.getBook().getAuthor())
-                .rentPeriod(bookCopy.getBook().getRentPeriod())
-                .build())
+                        .id(bookCopy.getBook().getId())
+                        .name(bookCopy.getBook().getName())
+                        .author(bookCopy.getBook().getAuthor())
+                        .rentPeriod(bookCopy.getBook().getRentPeriod())
+                        .build())
                 .build();
 
         return bookCopyDto;
@@ -47,14 +55,11 @@ public class BookCopyConverter implements GenericConverter {
 
     private BookCopy convertBookCopyDto(Object o) {
         BookCopyDto bookCopyDto = (BookCopyDto) o;
+        Book book = bookService.findById(bookCopyDto.getBookDto().getId());
+
         BookCopy bookCopy = BookCopy.builder()
                 .id(bookCopyDto.getId())
-                .book(Book.builder()
-                .id(bookCopyDto.getBookDto().getId())
-                .name(bookCopyDto.getBookDto().getName())
-                .author(bookCopyDto.getBookDto().getAuthor())
-                .rentPeriod(bookCopyDto.getBookDto().getRentPeriod())
-                .build())
+                .book(book)
                 .build();
         return bookCopy;
     }

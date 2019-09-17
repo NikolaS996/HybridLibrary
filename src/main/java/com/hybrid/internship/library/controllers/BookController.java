@@ -66,6 +66,12 @@ public class BookController {
 
     }
 
+    @GetMapping("/mostRented")
+    public ResponseEntity<BookDto> getMostRentedBook(){
+        //return ResponseEntity.ok(bookRentalService.findMostRentedBook());
+        return null;
+    }
+
     @PostMapping()
     public ResponseEntity<BookDto> createBook(@RequestBody BookDto bookDto){
         //return ResponseEntity.ok(conversionService.convert(bookService.create(bookDto), BookDto.class));

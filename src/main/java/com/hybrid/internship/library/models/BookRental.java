@@ -1,5 +1,6 @@
 package com.hybrid.internship.library.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -18,11 +19,13 @@ public class BookRental extends AbstractModel{
     @JoinColumn
     @ManyToOne
     @NotNull
+    //@JsonManagedReference
     private User user;
 
     @JoinColumn
     @ManyToOne
     @NotNull
+    //@JsonManagedReference
     private BookCopy bookCopy;
 
     @Column

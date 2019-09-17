@@ -9,12 +9,17 @@ import com.hybrid.internship.library.models.Book;
 import com.hybrid.internship.library.models.BookCopy;
 import com.hybrid.internship.library.models.BookRental;
 import com.hybrid.internship.library.models.User;
+import com.hybrid.internship.library.services.serviceImplementation.BookRentalServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.TypeDescriptor;
 import org.springframework.core.convert.converter.GenericConverter;
 
 import java.util.Set;
 
 public class BookRentalConverter implements GenericConverter {
+
+    @Autowired
+    BookRentalServiceImpl bookRentalService;
 
     @Override
     public Set<ConvertiblePair> getConvertibleTypes() {
@@ -38,22 +43,22 @@ public class BookRentalConverter implements GenericConverter {
         BookRental bookRental = (BookRental) o;
         BookRentalDto bookRentalDto = BookRentalDto.builder()
                 .id(bookRental.getId())
-                .userDto(UserDto.builder()
-                    .id(bookRental.getUser().getId())
-                    .firstName(bookRental.getUser().getFirstName())
-                    .lastName(bookRental.getUser().getLastName())
-                    .email(bookRental.getUser().getEmail())
-                    .username(bookRental.getUser().getUsername())
-                    .build())
-                .bookCopyDto(BookCopyDto.builder()
-                    .id(bookRental.getBookCopy().getId())
-                    .bookDto(BookDto.builder()
-                        .id(bookRental.getBookCopy().getBook().getId())
-                        .name(bookRental.getBookCopy().getBook().getName())
-                        .author(bookRental.getBookCopy().getBook().getAuthor())
-                        .rentPeriod(bookRental.getBookCopy().getBook().getRentPeriod())
+                .user(UserDto.builder()
+                        .id(bookRental.getUser().getId())
+                        .firstName(bookRental.getUser().getFirstName())
+                        .lastName(bookRental.getUser().getLastName())
+                        .email(bookRental.getUser().getEmail())
+                        .username(bookRental.getUser().getUsername())
                         .build())
-                    .build())
+                .bookCopy(BookCopyDto.builder()
+                        .id(bookRental.getBookCopy().getId())
+                        .bookDto(BookDto.builder()
+                                .id(bookRental.getBookCopy().getBook().getId())
+                                .name(bookRental.getBookCopy().getBook().getName())
+                                .author(bookRental.getBookCopy().getBook().getAuthor())
+                                .rentPeriod(bookRental.getBookCopy().getBook().getRentPeriod())
+                                .build())
+                        .build())
                 .rentedDate(bookRental.getRentedDate())
                 .build();
 
@@ -65,21 +70,32 @@ public class BookRentalConverter implements GenericConverter {
         BookRental bookRental = BookRental.builder()
                 .id(bookRentalDto.getId())
                 .user(User.builder()
-                    .id(bookRentalDto.getUserDto().getId())
-                    .firstName(bookRentalDto.getUserDto().getFirstName())
-                    .lastName(bookRentalDto.getUserDto().getLastName())
-                    .username(bookRentalDto.getUserDto().getUsername())
-                    .email(bookRentalDto.getUserDto().getEmail())
-                    .build())
-                .bookCopy(BookCopy.builder()
-                    .id(bookRentalDto.getBookCopyDto().getId())
-                    .book(Book.builder()
-                        .id(bookRentalDto.getBookCopyDto().getBookDto().getId())
-                        .name(bookRentalDto.getBookCopyDto().getBookDto().getName())
-                        .author(bookRentalDto.getBookCopyDto().getBookDto().getAuthor())
-                        .rentPeriod(bookRentalDto.getBookCopyDto().getBookDto().getRentPeriod())
+                        .id(bookRentalDto.getUser().getId())
+                        .firstName(bookRentalService
+                                .findById(bookRentalDto.getId()).getUser().getFirstName())
+                        .lastName(bookRentalService
+                                .findById(bookRentalDto.getId()).getUser().getLastName())
+                        .username(bookRentalService
+                                .findById(bookRentalDto.getId()).getUser().getUsername())
+                        .email(bookRentalService
+                                .findById(bookRentalDto.getId()).getUser().getEmail())
                         .build())
-                    .build())
+                .bookCopy(BookCopy.builder()
+                        .id(bookRentalDto.getBookCopy().getId())
+                        .book(Book.builder()
+                                .id(bookRentalDto.getBookCopy().getBookDto().getId())
+                                .name(bookRentalService
+                                        .findById(bookRentalDto.getId())
+                                        .getBookCopy().getBookDto().getName())
+                                .author(bookRentalService
+                                        .findById(bookRentalDto.getId())
+                                        .getBookCopy().getBookDto().getAuthor())
+                                .rentPeriod(bookRentalService
+                                        .findById(bookRentalDto.getId())
+                                        .getBookCopy().getBookDto().getRentPeriod()
+                                )
+                                .build())
+                        .build())
                 .rentedDate(bookRentalDto.getRentedDate())
                 .build();
 

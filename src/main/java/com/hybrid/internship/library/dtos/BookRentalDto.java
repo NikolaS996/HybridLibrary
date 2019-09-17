@@ -9,8 +9,8 @@ import java.time.LocalDate;
 @Builder
 public class BookRentalDto {
     private Long id;
-    private UserDto userDto;
-    private BookCopyDto bookCopyDto;
+    private UserDto user;
+    private BookCopyDto bookCopy;
     private LocalDate rentedDate;
     //private boolean isReturned;
 }

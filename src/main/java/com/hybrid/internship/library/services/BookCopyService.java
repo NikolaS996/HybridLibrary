@@ -16,6 +16,8 @@ public interface BookCopyService extends AbstractService<BookCopyDto, Long> {
 
     BookCopyDto update(BookCopyDto bookCopy);
 
+    int totalCopiesByBookId(Long id);
+
     void delete(Long id);
 
     void deleteAllByBookId(Long id);

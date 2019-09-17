@@ -1,6 +1,7 @@
 package com.hybrid.internship.library.services.serviceImplementation;
 
 import com.hybrid.internship.library.dtos.BookRentalDto;
+import com.hybrid.internship.library.models.Book;
 import com.hybrid.internship.library.models.BookRental;
 import com.hybrid.internship.library.repositories.BookRentalRepository;
 import com.hybrid.internship.library.services.BookRentalService;
@@ -16,6 +17,8 @@ public class BookRentalServiceImpl implements BookRentalService {
 
     @Autowired
     BookRentalRepository bookRentalRepository;
+    @Autowired
+    BookCopyServiceImpl bookCopyService;
     @Autowired
     ConversionService conversionService;
 
@@ -34,17 +37,48 @@ public class BookRentalServiceImpl implements BookRentalService {
 
     @Override
     public BookRentalDto create(BookRentalDto bookRentalDto) {
-        return conversionService.convert(bookRentalRepository.save(conversionService.convert(bookRentalDto, BookRental.class)), BookRentalDto.class);
+        //int totalCopies = bookCopyService.totalCopiesByBookId(bookRentalDto.getBookCopyDto().getBookDto().getId());
+        Long id = bookRentalDto.getBookCopy().getBookDto().getId();
+        int totalCopies =
+                bookCopyService.totalCopiesByBookId(id);
+        //int rentedCopies = rentedCopies(bookRentalDto.getBookCopyDto().getBookDto().getId());
+        int rentedCopies = rentedCopies(id);
+        if(totalCopies - rentedCopies > 0)
+            return conversionService.convert(bookRentalRepository.save(conversionService.convert(bookRentalDto, BookRental.class)), BookRentalDto.class);
+        return null;
     }
 
     @Override
     public BookRentalDto update(BookRentalDto bookRentalDto) {
-        return conversionService.convert(bookRentalRepository.save(conversionService.convert(bookRentalDto, BookRental.class)), BookRentalDto.class);
+        BookRental updatedEntity = conversionService.convert(bookRentalDto, BookRental.class);
+        updatedEntity.setIsReturned(true);
+        return conversionService.convert(bookRentalRepository.save(updatedEntity), BookRentalDto.class);
     }
 
     @Override
-    public int hasRentedCopies(Long id) {
-        return bookRentalRepository.hasRentedCopies(id);
+    public List<BookRentalDto> findAllByUserId(Long id) {
+        return bookRentalRepository.findAllByUserId(id)
+                .stream()
+                .map(bookRental -> conversionService.convert(bookRental, BookRentalDto.class))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<BookRentalDto> findAllByBookId(Long id) {
+        return bookRentalRepository.findAllByBookId(id)
+                .stream()
+                .map(bookRental -> conversionService.convert(bookRental, BookRentalDto.class))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public Book findMostRentedBook() {
+        return null;
+    }
+
+    @Override
+    public int rentedCopies(Long id) {
+        return bookRentalRepository.rentedCopies(id);
     }
 
     @Override

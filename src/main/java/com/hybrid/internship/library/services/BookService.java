@@ -18,6 +18,8 @@ public interface BookService extends AbstractService<BookDto, Long>{
 
     BookDto update(BookDto book);
 
+    //BookDto mostRentedBook();
+
     void delete(Long id);
 
     boolean exists(Long id);
