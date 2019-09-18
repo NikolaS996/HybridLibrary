@@ -57,7 +57,7 @@ public class BookRentalController {
 //    }
 
     @GetMapping("/mostRented")
-    public ResponseEntity<BookRentalCountDto> mostRentedBook(){
+    public ResponseEntity<List<BookRentalCountDto>> mostRentedBook(){
         return ResponseEntity.ok(bookRentalService.findMostRentedBook());
     }
 

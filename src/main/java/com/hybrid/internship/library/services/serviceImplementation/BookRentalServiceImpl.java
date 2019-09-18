@@ -81,7 +81,7 @@ public class BookRentalServiceImpl implements BookRentalService {
 //    }
 
     @Override
-    public BookRentalCountDto findMostRentedBook() {
+    public List<BookRentalCountDto> findMostRentedBook() {
         return bookRentalRepository.findMostRentedBook();
     }
 
