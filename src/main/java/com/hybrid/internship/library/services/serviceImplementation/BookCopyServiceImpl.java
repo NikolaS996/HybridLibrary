@@ -16,38 +16,41 @@ public class BookCopyServiceImpl implements BookCopyService {
 
     @Autowired
     BookCopyRepository bookCopyRepository;
-    @Autowired
-    ConversionService conversionService;
 
     @Override
-    public List<BookCopyDto> findAll() {
-        return bookCopyRepository.findAll().
-                stream()
-                .map(bookCopy -> conversionService.convert(bookCopy, BookCopyDto.class))
-                .collect(Collectors.toList());
+    public List<BookCopy> findAll() {
+//        return bookCopyRepository.findAll().
+//                stream()
+//                .map(bookCopy -> conversionService.convert(bookCopy, BookCopyDto.class))
+//                .collect(Collectors.toList());
+        return bookCopyRepository.findAll();
     }
 
     @Override
-    public List<BookCopyDto> findAllByBookId(Long id) {
-        return bookCopyRepository.findAllByBookId(id).
-                stream()
-                .map(bookCopy -> conversionService.convert(bookCopy, BookCopyDto.class))
-                .collect(Collectors.toList());
+    public List<BookCopy> findAllByBookId(Long id) {
+//        return bookCopyRepository.findAllByBookId(id).
+//                stream()
+//                .map(bookCopy -> conversionService.convert(bookCopy, BookCopyDto.class))
+//                .collect(Collectors.toList());
+        return bookCopyRepository.findAllByBookId(id);
     }
 
     @Override
-    public BookCopyDto findById(Long id) {
-        return conversionService.convert(bookCopyRepository.findById(id).orElseGet(() -> null), BookCopyDto.class);
+    public BookCopy findById(Long id) {
+        //return conversionService.convert(bookCopyRepository.findById(id).orElseGet(() -> null), BookCopyDto.class);
+        return bookCopyRepository.findById(id).orElseGet(() -> null);
     }
 
     @Override
-    public BookCopyDto create(BookCopyDto bookCopyDto) {
-        return conversionService.convert(bookCopyRepository.save(conversionService.convert(bookCopyDto, BookCopy.class)), BookCopyDto.class);
+    public BookCopy create(BookCopy bookCopy) {
+        return bookCopyRepository.save(bookCopy);
+        //return conversionService.convert(bookCopyRepository.save(conversionService.convert(bookCopyDto, BookCopy.class)), BookCopyDto.class);
     }
 
     @Override
-    public BookCopyDto update(BookCopyDto bookCopyDto) {
-        return conversionService.convert(bookCopyRepository.save(conversionService.convert(bookCopyDto, BookCopy.class)), BookCopyDto.class);
+    public BookCopy update(BookCopy bookCopy) {
+        return bookCopyRepository.save(bookCopy);
+        //return conversionService.convert(bookCopyRepository.save(conversionService.convert(bookCopyDto, BookCopy.class)), BookCopyDto.class);
     }
 
     @Override

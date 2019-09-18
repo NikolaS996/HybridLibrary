@@ -1,6 +1,5 @@
 package com.hybrid.internship.library.services.serviceImplementation;
 
-import com.hybrid.internship.library.dtos.UserDto;
 import com.hybrid.internship.library.models.User;
 import com.hybrid.internship.library.repositories.UserRepository;
 import com.hybrid.internship.library.services.UserService;
@@ -9,7 +8,6 @@ import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -21,30 +19,36 @@ public class UserServiceImpl implements UserService {
     ConversionService conversionService;
 
     @Override
-    public List<UserDto> findAll() {
-        return userRepository.findAll().
-                stream()
-                .map(user -> conversionService.convert(user, UserDto.class))
-                .collect(Collectors.toList());
+    public List<User> findAll() {
+//        return userRepository.findAll().
+//                stream()
+//                .map(user -> conversionService.convert(user, UserDto.class))
+//                .collect(Collectors.toList());
+        return userRepository.findAll();
     }
 
     @Override
-    public UserDto findById(Long id) {
-        return conversionService.convert(userRepository.findById(id).orElseGet(() -> null), UserDto.class);
+    public User findById(Long id) {
+        //return conversionService.convert(userRepository.findById(id).orElseGet(() -> null), UserDto.class);
+        return userRepository.findById(id).orElseGet(() -> null);
     }
 
     @Override
-    public UserDto findByUsername(String username){
-        return conversionService.convert(userRepository.findByUsername(username), UserDto.class);}
-
-    @Override
-    public UserDto create(UserDto userDto) {
-        return conversionService.convert(userRepository.save(conversionService.convert(userDto, User.class)), UserDto.class);
+    public User findByUsername(String username) {
+        //return conversionService.convert(userRepository.findByUsername(username), UserDto.class);}
+        return userRepository.findByUsername(username);
     }
 
     @Override
-    public UserDto update(UserDto userDto) {
-        return conversionService.convert(userRepository.save(conversionService.convert(userDto, User.class)), UserDto.class);
+    public User create(User user) {
+        //return conversionService.convert(userRepository.save(conversionService.convert(userDto, User.class)), UserDto.class);
+            return userRepository.save(user);
+    }
+
+    @Override
+    public User update(User user) {
+        //return conversionService.convert(userRepository.save(conversionService.convert(userDto, User.class)), UserDto.class);
+        return userRepository.save(user);
     }
 
     @Override

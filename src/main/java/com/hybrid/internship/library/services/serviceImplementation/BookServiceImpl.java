@@ -26,42 +26,48 @@ public class BookServiceImpl implements BookService {
     BookRentalServiceImpl bookRentalService;
 
     @Override
-    public List<BookDto> findAll() {
-        return bookRepository.findAll().
-                stream()
-                .map(book -> conversionService.convert(book, BookDto.class))
-                .collect(Collectors.toList());
+    public List<Book> findAll() {
+//        return bookRepository.findAll().
+//                stream()
+//                .map(book -> conversionService.convert(book, BookDto.class))
+//                .collect(Collectors.toList());
+        return bookRepository.findAll();
     }
 
     @Override
-    public BookDto findById(Long id) {
-        return conversionService.convert(bookRepository.findById(id).orElseGet(() -> null), BookDto.class);
+    public Book findById(Long id) {
+        //return conversionService.convert(bookRepository.findById(id).orElseGet(() -> null), BookDto.class);
+        return bookRepository.findById(id).orElseGet(()->null);
     }
 
     @Override
-    public List<BookDto> findAllByName(String name) {
-        return bookRepository.findAllByName(name).
-                stream()
-                .map(book -> conversionService.convert(book, BookDto.class))
-                .collect(Collectors.toList());
+    public List<Book> findAllByName(String name) {
+//        return bookRepository.findAllByName(name).
+//                stream()
+//                .map(book -> conversionService.convert(book, BookDto.class))
+//                .collect(Collectors.toList());
+        return bookRepository.findAllByName(name);
     }
 
     @Override
-    public List<BookDto> findAllByAuthor(String author) {
-        return bookRepository.findAllByAuthor(author).
-                stream()
-                .map(book -> conversionService.convert(book, BookDto.class))
-                .collect(Collectors.toList());
+    public List<Book> findAllByAuthor(String author) {
+//        return bookRepository.findAllByAuthor(author).
+//                stream()
+//                .map(book -> conversionService.convert(book, BookDto.class))
+//                .collect(Collectors.toList());
+        return bookRepository.findAllByAuthor(author);
     }
 
     @Override
-    public BookDto create(BookDto bookDto) {
-        return conversionService.convert(bookRepository.save(conversionService.convert(bookDto, Book.class)), BookDto.class);
+    public Book create(Book book) {
+        return bookRepository.save(book);
+        //return conversionService.convert(bookRepository.save(conversionService.convert(bookDto, Book.class)), BookDto.class);
     }
 
     @Override
-    public BookDto update(BookDto bookDto) {
-        return conversionService.convert(bookRepository.save(conversionService.convert(bookDto, Book.class)), BookDto.class);
+    public Book update(Book book) {
+        return bookRepository.save(book);
+        //return conversionService.convert(bookRepository.save(conversionService.convert(bookDto, Book.class)), BookDto.class);
     }
 
     @Override

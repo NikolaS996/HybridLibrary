@@ -12,5 +12,5 @@ public class BookRentalDto {
     private UserDto user;
     private BookCopyDto bookCopy;
     private LocalDate rentedDate;
-    //private boolean isReturned;
+    private boolean isReturned;
 }

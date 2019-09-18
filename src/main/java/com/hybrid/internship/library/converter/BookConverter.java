@@ -3,33 +3,18 @@ package com.hybrid.internship.library.converter;
 import com.google.common.collect.ImmutableSet;
 import com.hybrid.internship.library.dtos.BookDto;
 import com.hybrid.internship.library.models.Book;
+import lombok.AllArgsConstructor;
 import org.springframework.core.convert.TypeDescriptor;
 import org.springframework.core.convert.converter.GenericConverter;
+import org.springframework.stereotype.Component;
 
 import java.util.Set;
 
-public class BookConverter implements GenericConverter {
+@Component
+@AllArgsConstructor
+public class BookConverter implements AbstractConverter<Book, BookDto> {
 
-    @Override
-    public Set<ConvertiblePair> getConvertibleTypes() {
-        ConvertiblePair[] pairs = new ConvertiblePair[]{
-                new ConvertiblePair(Book.class, BookDto.class),
-                new ConvertiblePair(BookDto.class, Book.class)};
-        return ImmutableSet.copyOf(pairs);
-    }
-
-    @Override
-    public Object convert(Object o, TypeDescriptor sourceType, TypeDescriptor targetType) {
-        if (o instanceof Book)
-            return convertBook(o);
-        else if (o instanceof BookDto)
-            return convertBookDto(o);
-        else
-            return null; //Exception
-    }
-
-    private BookDto convertBook(Object o) {
-        Book book = (Book) o;
+    public BookDto convertToDto(Book book) {
         BookDto bookDto = BookDto.builder()
                 .id(book.getId())
                 .name(book.getName())
@@ -40,8 +25,7 @@ public class BookConverter implements GenericConverter {
         return bookDto;
     }
 
-    private Book convertBookDto(Object o) {
-        BookDto bookDto = (BookDto) o;
+    public Book convertToEntity(BookDto bookDto) {
         Book book = Book.builder()
                 .id(bookDto.getId())
                 .name(bookDto.getName())

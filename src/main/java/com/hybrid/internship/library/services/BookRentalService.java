@@ -1,25 +1,25 @@
 package com.hybrid.internship.library.services;
 
-import com.hybrid.internship.library.dtos.BookRentalDto;
+import com.hybrid.internship.library.dtos.BookRentalCountDto;
 import com.hybrid.internship.library.models.Book;
-
+import com.hybrid.internship.library.models.BookRental;
 import java.util.List;
 
-public interface BookRentalService extends AbstractService<BookRentalDto, Long>{
+public interface BookRentalService extends AbstractService<BookRental, Long>{
 
-    List<BookRentalDto> findAll();
+    List<BookRental> findAll();
 
-    BookRentalDto findById(Long id);
+    BookRental findById(Long id);
 
-    BookRentalDto create(BookRentalDto bookRental);
+    BookRental create(BookRental bookRental);
 
-    BookRentalDto update(BookRentalDto bookRental);
+    BookRental update(BookRental bookRental);
 
-    List<BookRentalDto> findAllByUserId(Long id);
+    List<BookRental> findAllByUser(Long id);
 
-    List<BookRentalDto> findAllByBookId(Long id);
+    //List<BookRental> findAllByBook(Long id);
 
-    Book findMostRentedBook();
+    BookRentalCountDto findMostRentedBook();
 
     int rentedCopies(Long id);
 

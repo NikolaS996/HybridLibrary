@@ -1,22 +1,21 @@
 package com.hybrid.internship.library.services;
 
-import com.hybrid.internship.library.dtos.UserDto;
 import com.hybrid.internship.library.models.User;
 
 import java.util.List;
 
 
-public interface UserService extends AbstractService<UserDto, Long> {
+public interface UserService extends AbstractService<User, Long> {
 
-    List<UserDto> findAll();
+    List<User> findAll();
 
-    UserDto findById(Long id);
+    User findById(Long id);
 
-    UserDto findByUsername(String username);
+    User findByUsername(String username);
 
-    UserDto create(UserDto userDto); //Dto zbog password
+    User create(User user); //Dto zbog password
 
-    UserDto update(UserDto userDto); //Dto zbog password
+    User update(User user); //Dto zbog password
 
     void delete(Long id);
 
