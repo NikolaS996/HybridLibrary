@@ -1,9 +1,11 @@
 package com.hybrid.internship.library.models;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
@@ -12,20 +14,16 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-//@EqualsAndHashCode(callSuper=false)
-//Record for every rental
 public class BookRental extends AbstractModel{
 
     @JoinColumn
     @ManyToOne
     @NotNull
-    //@JsonManagedReference
     private User user;
 
     @JoinColumn
     @ManyToOne
     @NotNull
-    //@JsonManagedReference
     private BookCopy bookCopy;
 
     @Column

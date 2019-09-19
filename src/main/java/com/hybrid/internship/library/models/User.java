@@ -13,7 +13,6 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
-//@EqualsAndHashCode(callSuper=false)
 public class User extends AbstractModel{
 
     @Column

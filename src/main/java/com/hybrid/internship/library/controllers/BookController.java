@@ -1,14 +1,10 @@
 package com.hybrid.internship.library.controllers;
 
 import com.hybrid.internship.library.converter.BookConverter;
-import com.hybrid.internship.library.converter.UserConverter;
 import com.hybrid.internship.library.dtos.BookDto;
 import com.hybrid.internship.library.models.Book;
-import com.hybrid.internship.library.services.serviceImplementation.BookRentalServiceImpl;
-import com.hybrid.internship.library.services.serviceImplementation.BookServiceImpl;
-import org.apache.coyote.Response;
+import com.hybrid.internship.library.services.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.convert.ConversionService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,10 +17,10 @@ import java.util.stream.Collectors;
 public class BookController {
 
     @Autowired
-    BookConverter bookConverter;
+    private BookConverter bookConverter;
 
     @Autowired
-    BookServiceImpl bookService;
+    private BookService bookService;
 
 
     @GetMapping()
@@ -34,13 +30,11 @@ public class BookController {
                 .map(book -> bookConverter.convertToDto(book))
                 .collect(Collectors.toList())
         );
-        //return ResponseEntity.ok(bookService.findAll());
     }
 
     @GetMapping("/id/{id}")
     public ResponseEntity<BookDto> getBookById(@PathVariable("id") Long id){
         return ResponseEntity.ok(bookConverter.convertToDto(bookService.findById(id)));
-        //return ResponseEntity.ok(bookService.findById(id));
     }
 
     @GetMapping("/name/{name}")
@@ -51,7 +45,6 @@ public class BookController {
                 .map(book -> bookConverter.convertToDto(book))
                 .collect(Collectors.toList())
         );
-        //return ResponseEntity.ok(bookService.findAllByName(name));
     }
 
     @GetMapping("/author/{author}")
@@ -62,40 +55,25 @@ public class BookController {
                         .map(book -> bookConverter.convertToDto(book))
                         .collect(Collectors.toList())
         );
-        //return ResponseEntity.ok(bookService.findAllByAuthor(author));
 
-    }
-
-    @GetMapping("/mostRented")
-    public ResponseEntity<BookDto> getMostRentedBook(){
-        //return ResponseEntity.ok(bookRentalService.findMostRentedBook());
-        return null;
     }
 
     @PostMapping()
     public ResponseEntity<BookDto> createBook(@RequestBody BookDto bookDto){
-        //return ResponseEntity.ok(conversionService.convert(bookService.create(bookDto), BookDto.class));
         Book convertedBook = bookConverter.convertToEntity(bookDto);
         return ResponseEntity.ok(bookConverter.convertToDto(bookService.create(convertedBook)));
     }
 
     @PutMapping()
     public ResponseEntity<BookDto> updateBook(@RequestBody BookDto bookDto){
-        //return ResponseEntity.ok(conversionService.convert(bookService.update(bookDto), BookDto.class));
         Book convertedBook = bookConverter.convertToEntity(bookDto);
         return ResponseEntity.ok(bookConverter.convertToDto(bookService.create(convertedBook)));
     }
 
     @DeleteMapping("/id/{id}")
-    public ResponseEntity<Void> deleteBook(@PathVariable("id") Long id){
-//        if(bookRentalService.hasRentedCopies(id) < 1) {
+    public ResponseEntity<Void> deleteBook(@PathVariable("id") Long id) {
         bookService.delete(id);
         return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
-//        }
-
-        //Izmeniti
-        //return new ResponseEntity<Void>(HttpStatus.OK);
     }
-
 
 }

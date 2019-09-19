@@ -1,11 +1,11 @@
 package com.hybrid.internship.library.models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Getter
@@ -13,7 +13,6 @@ import java.util.List;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-//@EqualsAndHashCode(callSuper=false)
 public class Book extends AbstractModel {
 
     @Column
@@ -25,11 +24,9 @@ public class Book extends AbstractModel {
     private String author;
 
     @Column
-    //@NotNull
     private Integer rentPeriod;
 
     @OneToMany(mappedBy = "book")
-    @JsonBackReference
     private List<BookCopy> rentedCopies;
 
     @Builder

@@ -6,12 +6,14 @@ import com.hybrid.internship.library.models.Book;
 import com.hybrid.internship.library.models.BookCopy;
 import com.hybrid.internship.library.services.BookService;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 @AllArgsConstructor
 public class BookCopyConverter implements AbstractConverter<BookCopy, BookCopyDto> {
 
+    @Autowired
     private BookService bookService;
 
     @Override

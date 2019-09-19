@@ -3,9 +3,8 @@ package com.hybrid.internship.library.controllers;
 import com.hybrid.internship.library.converter.UserConverter;
 import com.hybrid.internship.library.dtos.UserDto;
 import com.hybrid.internship.library.models.User;
-import com.hybrid.internship.library.services.serviceImplementation.UserServiceImpl;
+import com.hybrid.internship.library.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.convert.ConversionService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,13 +17,10 @@ import java.util.stream.Collectors;
 public class UserController {
 
     @Autowired
-    UserConverter userConverter;
+    private UserConverter userConverter;
 
     @Autowired
-    UserServiceImpl userService;
-
-//    @Autowired
-//    BookServiceImpl bookService;
+    private UserService userService;
 
     @GetMapping("")
     public ResponseEntity<List<UserDto>> getAllUsers(){
@@ -33,20 +29,16 @@ public class UserController {
                 .map(user -> userConverter.convertToDto(user))
                 .collect(Collectors.toList())
         );
-        //return ResponseEntity.ok(userService.findAll());
-        //List<User> convertedUsers = userService.findAll()
     }
 
-    @GetMapping("id/{id}")
+    @GetMapping("/id/{id}")
     public ResponseEntity<UserDto> getUserById(@PathVariable("id") Long id){
         return ResponseEntity.ok(userConverter.convertToDto(userService.findById(id)));
-        //return ResponseEntity.ok(userService.findById(id));
     }
 
     @GetMapping("username/{username}")
     public ResponseEntity<UserDto> getUserByUsername(@PathVariable("username") String username){
         return ResponseEntity.ok(userConverter.convertToDto(userService.findByUsername(username)));
-        //return ResponseEntity.ok(userService.findByUsername(username));
     }
 
     @PostMapping("")
@@ -54,12 +46,10 @@ public class UserController {
         //user.setPassword(hashPassword(user.getPassword()));
         User convertedUser = userConverter.convertToEntity(userDto);
         return ResponseEntity.ok(userConverter.convertToDto(userService.create(convertedUser)));
-        //return ResponseEntity.ok(userService.create(userDto));
     }
 
     @PutMapping("")
     public ResponseEntity<UserDto> updateUser(@RequestBody UserDto userDto){
-        //return ResponseEntity.ok(conversionService.convert(userService.update(userDto), UserDto.class));
         User convertedUser = userConverter.convertToEntity(userDto);
         return ResponseEntity.ok(userConverter.convertToDto(userService.update(convertedUser)));
     }

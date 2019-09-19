@@ -1,14 +1,9 @@
 package com.hybrid.internship.library.converter;
 
-import com.google.common.collect.ImmutableSet;
 import com.hybrid.internship.library.dtos.BookDto;
 import com.hybrid.internship.library.models.Book;
 import lombok.AllArgsConstructor;
-import org.springframework.core.convert.TypeDescriptor;
-import org.springframework.core.convert.converter.GenericConverter;
 import org.springframework.stereotype.Component;
-
-import java.util.Set;
 
 @Component
 @AllArgsConstructor

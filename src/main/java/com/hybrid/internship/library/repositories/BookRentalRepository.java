@@ -1,15 +1,10 @@
 package com.hybrid.internship.library.repositories;
 
 import com.hybrid.internship.library.dtos.BookRentalCountDto;
-import com.hybrid.internship.library.dtos.BookRentalDto;
-import com.hybrid.internship.library.models.Book;
 import com.hybrid.internship.library.models.BookRental;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import javax.persistence.EntityManager;
-import javax.persistence.Tuple;
 import java.util.List;
 
 public interface BookRentalRepository extends JpaRepository<BookRental, Long> {
@@ -20,15 +15,13 @@ public interface BookRentalRepository extends JpaRepository<BookRental, Long> {
             "WHERE is_returned=FALSE AND Book_id=?1")
     int rentedCopies(Long id);
 
-//    @Query(nativeQuery = true, value = "SELECT COUNT(*)" +
-//            "FROM Book_rental JOIN User ON (Book_rental.User_id=User.id" +
-//            "WHERE Book_rental.User_id=?1")
-    List<BookRental> findAllByUser(Long id);
+    List<BookRental> findAllByUserId(Long id);
 
-//    @Query(nativeQuery = true, value = "SELECT COUNT(*)" +
-//            "FROM Book_rental JOIN Book ON (Book_rental.Book_id=Book.id" +
-//            "WHERE Book_rental.Book_id=?1")
-    //List<BookRental> findAllByBook(Long id);
+    @Query(nativeQuery = true, value="SELECT Book_rental.id, Book_rental.is_returned, Book_rental.rented_date," +
+            "Book_rental.book_copy_id, Book_rental.user_id " +
+            "FROM Book_rental JOIN Book_copy ON (Book_rental.Book_copy_id = Book_copy.id)" +
+            "WHERE Book_copy.book_id = ?1")
+    List<BookRental> findAllByBookId(Long id);
 
     @Query(nativeQuery = true, value = "SELECT TOP 1 MAX(num) as rentalCount, book, name, author, rentPeriod FROM " +
             "(SELECT COUNT(Book.id) AS num, Book.id AS book, name, author, rent_period as rentPeriod " +
@@ -37,4 +30,9 @@ public interface BookRentalRepository extends JpaRepository<BookRental, Long> {
             "GROUP BY book, name, author, rentPeriod)" +
             "GROUP BY book, name, author, rentPeriod")
     List<BookRentalCountDto> findMostRentedBook();
+
+    @Query(nativeQuery = true, value="SELECT br.id, br.rented_date, br.is_returned, br.book_copy_id, br.user_id " +
+            "FROM Book b JOIN Book_copy bc ON (b.id=bc.book_id) JOIN book_rental br ON (br.book_copy_id=bc.id) " +
+            "WHERE is_returned = FALSE AND(rented_date < CURRENT_DATE() - rent_period)")
+    List<BookRental> findOverdueBookReturns();
 }

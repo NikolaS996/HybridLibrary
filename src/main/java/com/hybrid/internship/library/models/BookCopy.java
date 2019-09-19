@@ -1,9 +1,10 @@
 package com.hybrid.internship.library.models;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -11,13 +12,11 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @Getter
 @Setter
-//@EqualsAndHashCode(callSuper=false)
 public class BookCopy extends AbstractModel{
 
     @ManyToOne
     @JoinColumn
     @NotNull
-    @JsonManagedReference
     private Book book;
 
     @Builder
