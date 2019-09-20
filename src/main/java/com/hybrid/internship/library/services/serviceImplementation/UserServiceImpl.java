@@ -1,13 +1,15 @@
 package com.hybrid.internship.library.services.serviceImplementation;
 
+import com.hybrid.internship.library.exceptions.RentedCopiesException;
 import com.hybrid.internship.library.models.User;
 import com.hybrid.internship.library.repositories.UserRepository;
+import com.hybrid.internship.library.services.BookRentalService;
 import com.hybrid.internship.library.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -15,33 +17,50 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private BookRentalService bookRentalService;
+
     @Override
     public List<User> findAll() {
         return userRepository.findAll();
     }
 
     @Override
-    public User findById(Long id) {
-        return userRepository.findById(id).orElseGet(() -> null);
+    public Optional<User> findById(Long id) {
+        return userRepository.findById(id);
     }
 
     @Override
-    public User findByUsername(String username) {
+    public Optional<User> findByUsername(String username) {
         return userRepository.findByUsername(username);
     }
 
     @Override
-    public User create(User user) {
-            return userRepository.save(user);
+    public Boolean isUsernameAvailable(String username) {
+        if (userRepository.findByUsername(username) == null)
+            return true;
+        return false;
     }
 
     @Override
+    public User create(User user) {
+        if(isUsernameAvailable(user.getUsername()))
+            return userRepository.save(user);
+        return null;
+    }
+
+
+    @Override
     public User update(User user) {
-        return userRepository.save(user);
+        if(isUsernameAvailable(user.getUsername()))
+            return userRepository.save(user);
+        return null;
     }
 
     @Override
     public void delete(Long id) {
+        if(!bookRentalService.findAllByUserIdAndIsRented(id,false).isEmpty())
+            throw new RentedCopiesException();
         userRepository.deleteById(id);
     }
 

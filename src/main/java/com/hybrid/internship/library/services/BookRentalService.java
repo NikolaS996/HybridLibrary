@@ -11,9 +11,13 @@ public interface BookRentalService extends AbstractService<BookRental, Long>{
 
     List<BookRental> findAllByBookId(Long id);
 
-    List<BookRentalCountDto> findMostRentedBook();
+    BookRentalCountDto findMostRentedBook();
 
     List<BookRental> findOverdueBookReturns();
 
+    List<BookRental> findAllByUserIdAndIsRented(Long id, Boolean bool);
+
     int rentedCopies(Long id);
+
+    //List<BookRental> isRented(Long id);
 }

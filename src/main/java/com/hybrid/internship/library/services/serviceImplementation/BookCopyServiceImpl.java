@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BookCopyServiceImpl implements BookCopyService {
@@ -25,8 +26,8 @@ public class BookCopyServiceImpl implements BookCopyService {
     }
 
     @Override
-    public BookCopy findById(Long id) {
-        return bookCopyRepository.findById(id).orElseGet(() -> null);
+    public Optional<BookCopy> findById(Long id) {
+        return bookCopyRepository.findById(id);
     }
 
     @Override

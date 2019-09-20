@@ -1,5 +1,6 @@
 package com.hybrid.internship.library.services.serviceImplementation;
 
+import com.hybrid.internship.library.exceptions.RentedCopiesException;
 import com.hybrid.internship.library.models.Book;
 import com.hybrid.internship.library.repositories.BookRepository;
 import com.hybrid.internship.library.services.BookCopyService;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -28,8 +30,8 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Book findById(Long id) {
-        return bookRepository.findById(id).orElseGet(()->null);
+    public Optional<Book> findById(Long id) {
+        return bookRepository.findById(id);
     }
 
     @Override
@@ -58,6 +60,7 @@ public class BookServiceImpl implements BookService {
             bookCopyService.deleteAllByBookId(id);
             bookRepository.deleteById(id);
         }
+        else throw new RentedCopiesException();
     }
 
     @Override

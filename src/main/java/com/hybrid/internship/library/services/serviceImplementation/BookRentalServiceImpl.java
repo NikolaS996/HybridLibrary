@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BookRentalServiceImpl implements BookRentalService {
@@ -24,19 +25,23 @@ public class BookRentalServiceImpl implements BookRentalService {
     }
 
     @Override
-    public BookRental findById(Long id) {
-        return bookRentalRepository.findById(id).orElseGet(() -> null);
+    public Optional<BookRental> findById(Long id) {
+        return bookRentalRepository.findById(id);
     }
 
     @Override
     public BookRental create(BookRental bookRental) {
         Long id = bookRental.getBookCopy().getBook().getId();
+
+//        if(isRented())
+//            throw new AlreadyRentedException();
+
         int totalCopies =
-                bookCopyService.totalCopiesByBookId(id);
+                    bookCopyService.totalCopiesByBookId(id);
         int rentedCopies = rentedCopies(id);
-        if(totalCopies - rentedCopies > 0){
+        //if(totalCopies - rentedCopies > 0 && !(isRented(bookRental.getBookCopy().getId()))){
+        if (totalCopies - rentedCopies >= 0)
             return bookRentalRepository.save(bookRental);
-        }
         return null;
     }
 
@@ -57,7 +62,7 @@ public class BookRentalServiceImpl implements BookRentalService {
     }
 
     @Override
-    public List<BookRentalCountDto> findMostRentedBook() {
+    public BookRentalCountDto findMostRentedBook() {
         return bookRentalRepository.findMostRentedBook();
     }
 
@@ -67,9 +72,21 @@ public class BookRentalServiceImpl implements BookRentalService {
     }
 
     @Override
+    public List<BookRental> findAllByUserIdAndIsRented(Long id, Boolean bool) {
+        return bookRentalRepository.findAllByUserIdAndIsRented(id, bool);
+    }
+
+    @Override
     public int rentedCopies(Long id) {
         return bookRentalRepository.rentedCopies(id);
     }
+
+//    @Override
+//    public List<BookRental> isRented(Long id) {
+//        if(bookRentalRepository.findByBookCopyIdAndIsReturned(id, false).isEmpty())
+//            return
+//        return true;
+//    }
 
     @Override
     public void delete(Long id) {

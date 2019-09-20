@@ -23,7 +23,11 @@ public class BookRentalController {
 
     @GetMapping
     public ResponseEntity<List<BookRentalDto>> getAllBookRentals() {
-        return ResponseEntity.ok(bookRentalService.findAll()
+        List<BookRental> bookRentals = bookRentalService.findAll();
+        if (bookRentals.isEmpty())
+            return ResponseEntity.notFound().build();
+            //throw new ResourceNotFoundException("There are no book rentals.");
+        return ResponseEntity.ok(bookRentals
                 .stream()
                 .map(bookRental -> bookRentalConverter.convertToDto(bookRental))
                 .collect(Collectors.toList()));
@@ -31,12 +35,19 @@ public class BookRentalController {
 
     @GetMapping("/id/{id}")
     public ResponseEntity<BookRentalDto> getBookRentalById(@PathVariable("id") Long id) {
-        return ResponseEntity.ok(bookRentalConverter.convertToDto(bookRentalService.findById(id)));
+        return bookRentalService.findById(id)
+                .map(bookRental -> ResponseEntity.ok(bookRentalConverter.convertToDto(bookRental)))
+                .orElse(ResponseEntity.notFound().build());
+        //.orElseThrow(() -> new ResourceNotFoundException("There is no book rental with ID: " + id + "."));
     }
 
     @GetMapping("/user-id/{id}")
     public ResponseEntity<List<BookRentalDto>> getBookRentalByUserId(@PathVariable("id") Long id) {
-        return ResponseEntity.ok(bookRentalService.findAllByUserId(id)
+        List<BookRental> bookRentals = bookRentalService.findAllByUserId(id);
+        if (bookRentals.isEmpty())
+            return ResponseEntity.notFound().build();
+            //throw new ResourceNotFoundException("There are no book rentals made by user whose ID is: " + id + ".");
+        return ResponseEntity.ok(bookRentals
                 .stream()
                 .map(bookRental -> bookRentalConverter.convertToDto(bookRental))
                 .collect(Collectors.toList()));
@@ -44,20 +55,32 @@ public class BookRentalController {
 
     @GetMapping("/book-id/{id}")
     public ResponseEntity<List<BookRentalDto>> getBookRentalByBookId(@PathVariable("id") Long id) {
-        return ResponseEntity.ok(bookRentalService.findAllByBookId(id)
+        List<BookRental> bookRentals = bookRentalService.findAllByUserId(id);
+        if (bookRentals.isEmpty())
+            return ResponseEntity.notFound().build();
+            //throw new ResourceNotFoundException("There are rentals of book whose ID is: " + id + ".");
+        return ResponseEntity.ok(bookRentals
                 .stream()
                 .map(bookRental -> bookRentalConverter.convertToDto(bookRental))
                 .collect(Collectors.toList()));
     }
 
     @GetMapping("/most-rented")
-    public ResponseEntity<List<BookRentalCountDto>> mostRentedBook(){
-        return ResponseEntity.ok(bookRentalService.findMostRentedBook());
+    public ResponseEntity<BookRentalCountDto> mostRentedBook() {
+        BookRentalCountDto mostRentedBook = bookRentalService.findMostRentedBook();
+        if (mostRentedBook == null)
+            return ResponseEntity.notFound().build();
+            //throw new ResourceNotFoundException("There aren't any rented books");
+        return ResponseEntity.ok(mostRentedBook);
     }
 
     @GetMapping("/overdue-book-returns")
-    public ResponseEntity<List<BookRentalDto>> findOverdueBookReturns(){
-        return ResponseEntity.ok(bookRentalService.findOverdueBookReturns()
+    public ResponseEntity<List<BookRentalDto>> findOverdueBookReturns() {
+        List<BookRental> overdueBookRentals = bookRentalService.findOverdueBookReturns();
+        if (overdueBookRentals.isEmpty())
+            return ResponseEntity.notFound().build();
+        //throw new ResourceNotFoundException("There aren't any overdue book returns");
+        return ResponseEntity.ok(overdueBookRentals
                 .stream()
                 .map(bookRental -> bookRentalConverter.convertToDto(bookRental))
                 .collect(Collectors.toList()));

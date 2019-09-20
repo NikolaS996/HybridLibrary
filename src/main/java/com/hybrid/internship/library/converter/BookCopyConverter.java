@@ -33,8 +33,8 @@ public class BookCopyConverter implements AbstractConverter<BookCopy, BookCopyDt
 
     public BookCopy convertToEntity(BookCopyDto bookCopyDto) {
         Long id = bookCopyDto.getId();
-        Book book = bookService.findById(bookCopyDto.getBookDto().getId());
-
+        //Book book = bookService.findById(bookCopyDto.getBookDto().getId()).orElseThrow(() -> new BookCopyNotFoundException());
+        Book book = bookService.findById(bookCopyDto.getBookDto().getId()).orElseGet(() -> null);
         BookCopy bookCopy = BookCopy.builder()
                 .id(id)
                 .book(book)

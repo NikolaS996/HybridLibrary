@@ -29,7 +29,6 @@ public class UserConverter implements AbstractConverter<User, UserDto> {
                 .username(userDto.getUsername())
                 .email(userDto.getEmail())
                 .build();
-
         return user;
     }
 }

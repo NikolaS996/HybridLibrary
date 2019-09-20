@@ -2,12 +2,13 @@ package com.hybrid.internship.library.services;
 
 
 import java.util.List;
+import java.util.Optional;
 
 public interface AbstractService<E, P>{
 
     List<E> findAll();
 
-    E findById(P id);
+    Optional<E> findById(P id);
 
     E create(E e);
 

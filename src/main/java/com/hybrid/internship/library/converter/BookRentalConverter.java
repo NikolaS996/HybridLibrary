@@ -50,8 +50,8 @@ public class BookRentalConverter implements AbstractConverter<BookRental, BookRe
     }
 
     public BookRental convertToEntity(BookRentalDto bookRentalDto) {
-        User user = userService.findById(bookRentalDto.getUser().getId());
-        BookCopy bookCopy = bookCopyService.findById(bookRentalDto.getBookCopy().getId());
+        User user = userService.findById(bookRentalDto.getUser().getId()).orElseGet(() -> null);
+        BookCopy bookCopy = bookCopyService.findById(bookRentalDto.getBookCopy().getId()).orElseGet(() -> null);
         BookRental bookRental = BookRental.builder()
                 .id(bookRentalDto.getId())
                 .user(user)
