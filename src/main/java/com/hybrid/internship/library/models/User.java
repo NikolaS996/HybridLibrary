@@ -27,7 +27,7 @@ public class User extends AbstractModel{
     @NotBlank(message = "Username can't be blank")
     private String username;
 
-    @Column
+    @Column(length = 61)
     @Size(min = 8, message = "Password length can't be less than 8 characters")
     private String password;
 

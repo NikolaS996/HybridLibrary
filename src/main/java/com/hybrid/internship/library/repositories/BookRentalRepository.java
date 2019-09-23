@@ -17,7 +17,7 @@ public interface BookRentalRepository extends JpaRepository<BookRental, Long> {
 
 
     List<BookRental> findAllByUserId(Long id);
-    List<BookRental> findAllByUserIdAndIsRented(Long id, Boolean bool);
+    List<BookRental> findAllByUserIdAndIsReturned(Long id, Boolean bool);
 
     @Query(nativeQuery = true, value="SELECT Book_rental.id, Book_rental.is_returned, Book_rental.rented_date," +
             "Book_rental.book_copy_id, Book_rental.user_id " +
@@ -37,6 +37,8 @@ public interface BookRentalRepository extends JpaRepository<BookRental, Long> {
             "FROM Book b JOIN Book_copy bc ON (b.id=bc.book_id) JOIN book_rental br ON (br.book_copy_id=bc.id) " +
             "WHERE is_returned = FALSE AND(rented_date < CURRENT_DATE() - rent_period)")
     List<BookRental> findOverdueBookReturns();
+
+    Boolean existsByBookCopyIdAndIsReturned(Long id, Boolean bool);
 
     //List<BookRental> findByBookCopyIdAndIsReturned(Long id, Boolean bool);
 }

@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/bookRental")
+@RequestMapping("/api/book-rental")
 public class BookRentalController {
     @Autowired
     private BookRentalService bookRentalService;
@@ -90,7 +90,10 @@ public class BookRentalController {
     @PostMapping("/rent-book")
     public ResponseEntity<BookRentalDto> rentBook(@RequestBody BookRentalDto bookRentalDto) {
         BookRental convertedBookRental = bookRentalConverter.convertToEntity(bookRentalDto);
-        return ResponseEntity.ok(bookRentalConverter.convertToDto(bookRentalService.create(convertedBookRental)));
+        BookRental savedBook = bookRentalService.create(convertedBookRental);
+        if(savedBook == null)
+            return ResponseEntity.badRequest().build();
+        return ResponseEntity.ok(bookRentalConverter.convertToDto(savedBook));
     }
 
     @PutMapping("/return-book")

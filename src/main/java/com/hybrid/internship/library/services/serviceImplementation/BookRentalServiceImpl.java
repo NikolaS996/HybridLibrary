@@ -38,9 +38,11 @@ public class BookRentalServiceImpl implements BookRentalService {
 
         int totalCopies =
                     bookCopyService.totalCopiesByBookId(id);
-        int rentedCopies = rentedCopies(id);
+        //int rentedCopies = rentedCopies(id);
+        Boolean isBookCopyAvailable = availability(bookRental.getBookCopy().getId());
         //if(totalCopies - rentedCopies > 0 && !(isRented(bookRental.getBookCopy().getId()))){
-        if (totalCopies - rentedCopies >= 0)
+        //if (totalCopies - rentedCopies >= 0)
+        if(isBookCopyAvailable)
             return bookRentalRepository.save(bookRental);
         return null;
     }
@@ -73,12 +75,17 @@ public class BookRentalServiceImpl implements BookRentalService {
 
     @Override
     public List<BookRental> findAllByUserIdAndIsRented(Long id, Boolean bool) {
-        return bookRentalRepository.findAllByUserIdAndIsRented(id, bool);
+        return bookRentalRepository.findAllByUserIdAndIsReturned(id, bool);
     }
 
     @Override
     public int rentedCopies(Long id) {
         return bookRentalRepository.rentedCopies(id);
+    }
+
+    @Override
+    public Boolean availability(Long id) {
+        return !bookRentalRepository.existsByBookCopyIdAndIsReturned(id, false);
     }
 
 //    @Override
