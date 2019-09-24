@@ -37,7 +37,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Boolean isUsernameAvailable(String username) {
-        if (userRepository.findByUsername(username) == null)
+        if (userRepository.findByUsername(username).orElseGet(() -> null) == null)
+            return true;
+        return false;
+    }
+
+    @Override
+    public Boolean isUsernameAvailableForUpdate(String username, Long id) {
+        if(userRepository.findByUsernameForUpdate(username, id).orElseGet(() -> null) == null)
             return true;
         return false;
     }
@@ -52,14 +59,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User update(User user) {
-        if(isUsernameAvailable(user.getUsername()))
+        if (isUsernameAvailableForUpdate(user.getUsername(), user.getId()))
             return userRepository.save(user);
         return null;
     }
 
     @Override
     public void delete(Long id) {
-        if(!bookRentalService.findAllByUserIdAndIsRented(id,false).isEmpty())
+        if (!bookRentalService.findAllByUserIdAndIsRented(id, false).isEmpty())
             throw new RentedCopiesException();
         userRepository.deleteById(id);
     }

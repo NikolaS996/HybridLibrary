@@ -9,5 +9,6 @@ public interface UserService extends AbstractService<User, Long> {
 
     Optional<User> findByUsername(String username);
     Boolean isUsernameAvailable(String username);
+    Boolean isUsernameAvailableForUpdate(String username, Long id);
 
 }

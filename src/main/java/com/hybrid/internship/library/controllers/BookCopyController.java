@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 
 @RestController
-@RequestMapping("/api/bookCopy")
+@RequestMapping("/api/book-copy")
 public class BookCopyController {
 
     @Autowired
