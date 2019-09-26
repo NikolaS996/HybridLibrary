@@ -66,6 +66,7 @@ public class UserServiceImpl implements UserService {
             log.info("User {} is created.", savedUser);
             return savedUser;
         }
+        log.info("User {} isn't created.", user);
         return null;
     }
 
@@ -77,6 +78,7 @@ public class UserServiceImpl implements UserService {
             log.info("User {} is updated.", updatedUser);
             return updatedUser;
         }
+        log.info("User {} isn't updated", user);
         return null;
     }
 
@@ -86,8 +88,8 @@ public class UserServiceImpl implements UserService {
             log.info("User has rented copies and therefore can't be deleted.");
             throw new RentedCopiesException();
         }
-        log.info("User with ID {} successfully deleted.", id);
         userRepository.deleteById(id);
+        log.info("User with ID {} successfully deleted.", id);
     }
 
     @Override

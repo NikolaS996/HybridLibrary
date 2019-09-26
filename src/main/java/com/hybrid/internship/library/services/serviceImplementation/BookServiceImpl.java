@@ -48,12 +48,16 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Book create(Book book) {
-        return bookRepository.save(book);
+        Book createdBook = bookRepository.save(book);
+        log.info("Book {} is created.", createdBook);
+        return createdBook;
     }
 
     @Override
     public Book update(Book book) {
-        return bookRepository.save(book);
+        Book updatedBook = bookRepository.save(book);
+        log.info("Book {} is updated.", updatedBook);
+        return updatedBook;
     }
 
     @Override

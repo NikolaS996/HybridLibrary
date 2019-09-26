@@ -5,6 +5,7 @@ import com.hybrid.internship.library.models.BookRental;
 import com.hybrid.internship.library.repositories.BookRentalRepository;
 import com.hybrid.internship.library.services.BookCopyService;
 import com.hybrid.internship.library.services.BookRentalService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class BookRentalServiceImpl implements BookRentalService {
 
     @Autowired
@@ -42,15 +44,19 @@ public class BookRentalServiceImpl implements BookRentalService {
         Boolean isBookCopyAvailable = availability(bookRental.getBookCopy().getId());
         //if(totalCopies - rentedCopies > 0 && !(isRented(bookRental.getBookCopy().getId()))){
         //if (totalCopies - rentedCopies >= 0)
-        if(isBookCopyAvailable)
+        if(isBookCopyAvailable) {
+
             return bookRentalRepository.save(bookRental);
+        }
         return null;
     }
 
     @Override
     public BookRental update(BookRental bookRental) {
         bookRental.setIsReturned(true);
-        return bookRentalRepository.save(bookRental);
+        BookRental savedBookRental = bookRentalRepository.save(bookRental);
+        log.info("Book rental {} successfully updated.", savedBookRental);
+        return savedBookRental;
     }
 
     @Override

@@ -4,6 +4,7 @@ import com.hybrid.internship.library.converter.BookCopyConverter;
 import com.hybrid.internship.library.dtos.BookCopyDto;
 import com.hybrid.internship.library.models.BookCopy;
 import com.hybrid.internship.library.services.BookCopyService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import java.util.stream.Collectors;
 
 
 @RestController
+@Slf4j
 @RequestMapping("/api/book-copy")
 public class BookCopyController {
 
@@ -26,9 +28,12 @@ public class BookCopyController {
     @GetMapping()
     public ResponseEntity<List<BookCopyDto>> getAllBookCopies() {
         List<BookCopy> bookCopies = bookCopyService.findAll();
-        if(bookCopies.isEmpty())
+        if(bookCopies.isEmpty()) {
             //throw new ResourceNotFoundException("There are no book copies");
+            log.info("Currently there are no book copies to fetch.");
             return ResponseEntity.notFound().build();
+        }
+        log.info("Book copies are fetched.");
         return ResponseEntity.ok(bookCopies
                 .stream()
                 .map(bookCopy -> converter.convertToDto(bookCopy))
@@ -40,7 +45,10 @@ public class BookCopyController {
     public ResponseEntity<BookCopyDto> getBookCopyById(@PathVariable("id") Long id) {
         //try{
         return bookCopyService.findById(id)
-                .map(bookCopy -> ResponseEntity.ok(converter.convertToDto(bookCopy)))
+                .map(bookCopy -> {
+                    log.info("Book copy {} is fetched.", bookCopy);
+                    return ResponseEntity.ok(converter.convertToDto(bookCopy));
+                })
                 .orElse(ResponseEntity.notFound().build());
                 //.orElseThrow(() -> new ResourceNotFoundException("Book copy with ID: " + id + " not found."));
         //return bookCopyService.findById(id);
@@ -53,8 +61,10 @@ public class BookCopyController {
     @GetMapping("/book-id/{id}")
     public ResponseEntity<List<BookCopyDto>> getBookCopiesByBookId(@PathVariable("id") Long id) {
         List<BookCopy> bookCopies = bookCopyService.findAllByBookId(id);
-        if(bookCopies.isEmpty())
+        if(bookCopies.isEmpty()) {
+            log.info("There are no copies of the book with ID {} to be fetched.", id);
             return ResponseEntity.notFound().build();
+        }
             //throw new ResourceNotFoundException("There are no copies of the book whose ID is: " + id + ".");
         return ResponseEntity.ok(bookCopies
                 .stream()

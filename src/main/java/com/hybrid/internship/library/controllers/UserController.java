@@ -40,7 +40,7 @@ public class UserController {
             log.info("Currently there are no users to fetch.");
             return ResponseEntity.notFound().build();
         }
-        log.info("Users are fetched");
+        log.info("Users are fetched.");
         return ResponseEntity.ok(
                 users.stream()
                         .map(user -> userConverter.convertToDto(user))
@@ -63,7 +63,7 @@ public class UserController {
     public ResponseEntity<UserDto> getUserByUsername(@PathVariable("username") String username) {
         return userService.findByUsername(username)
                 .map(user -> {
-                    log.info("User {} is fetched", user);
+                    log.info("User {} is fetched.", user);
                     return ResponseEntity.ok(userConverter.convertToDto(user));
                 })
                 .orElse(ResponseEntity.notFound().build());
@@ -75,15 +75,25 @@ public class UserController {
         User convertedUser = userConverter.convertToEntity(userDto);
         convertedUser = userService.create(convertedUser);
         if (convertedUser == null)
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.badRequest().build();
         return ResponseEntity.ok(userConverter.convertToDto(convertedUser));
     }
 
     @PostMapping("/create-password/{id}")
     public ResponseEntity createPassword(@PathVariable("id") Long id, @RequestBody String password) {
         User user = userService.findById(id).orElseGet(() -> null);
-        if (user == null || user.getPassword() != null)
-            return ResponseEntity.notFound().build();
+//        if (user == null || user.getPassword() != null) {
+//            log.info("");
+//            return ResponseEntity.notFound().build();
+//        }
+        if(user == null)
+        {
+            log.info("User with ID {} wasn't found.", id);
+            if(user.getPassword() != null){
+                log.info("User with ID {} already has password set.", id);
+            }
+            return ResponseEntity.badRequest().build();
+        }
         user.setPassword(passwordEncoder.encode(password));
         user.setRole("ROLE_USER");
         user = userService.update(user);
@@ -93,6 +103,7 @@ public class UserController {
                         .password(user.getPassword())
                         .roles("USER")
                         .build());
+        log.info("Password successfully created.");
         return ResponseEntity.ok(userConverter.convertToDto(user));
     }
 
@@ -110,7 +121,7 @@ public class UserController {
         try {
             userService.delete(id);
         } catch (RentedCopiesException rce) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User can't be deleted because they didn't return book(s).");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
         return new ResponseEntity(HttpStatus.OK);
     }

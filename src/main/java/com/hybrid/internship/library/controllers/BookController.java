@@ -5,6 +5,7 @@ import com.hybrid.internship.library.dtos.BookDto;
 import com.hybrid.internship.library.exceptions.RentedCopiesException;
 import com.hybrid.internship.library.models.Book;
 import com.hybrid.internship.library.services.BookService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
+@Slf4j
 @RequestMapping("/api/book")
 public class BookController {
 
@@ -28,10 +30,12 @@ public class BookController {
     @GetMapping()
     public ResponseEntity<List<BookDto>> getAllBooks() {
         List<Book> books = bookService.findAll();
-        if (books.isEmpty())
+        if (books.isEmpty()) {
             //throw new ResourceNotFoundException("There are no books");
+            log.info("Currently there are no books to fetch.");
             return ResponseEntity.notFound().build();
-
+        }
+        log.info("Books are fetched");
         return ResponseEntity.ok(
                 books.stream()
                         .map(book -> bookConverter.convertToDto(book))
@@ -42,7 +46,10 @@ public class BookController {
     @GetMapping("/id/{id}")
     public ResponseEntity<BookDto> getBookById(@PathVariable("id") Long id) {
         return bookService.findById(id)
-                .map(book -> ResponseEntity.ok(bookConverter.convertToDto(book)))
+                .map(book -> {
+                    log.info("Book {} is fetched.", book);
+                    return ResponseEntity.ok(bookConverter.convertToDto(book));
+                })
                 .orElse(ResponseEntity.notFound().build());
         //.orElseThrow(() -> new ResourceNotFoundException("Book with ID: " + id + " not found."));
     }
@@ -50,9 +57,12 @@ public class BookController {
     @GetMapping("/name/{name}")
     public ResponseEntity<List<BookDto>> getBooksByName(@PathVariable("name") String name) {
         List<Book> books = bookService.findAllByName(name);
-        if (books.isEmpty())
+        if (books.isEmpty()) {
             //throw new ResourceNotFoundException("There are no books by name: " + name + ".");
+            log.info("There are no books named {} to be fetched.", name);
             return ResponseEntity.notFound().build();
+        }
+        log.info("Books named {} are fetched.", name);
         return ResponseEntity.ok(books
                 .stream()
                 .map(book -> bookConverter.convertToDto(book))
@@ -63,9 +73,12 @@ public class BookController {
     @GetMapping("/author/{author}")
     public ResponseEntity<List<BookDto>> getBooksByAuthor(@PathVariable("author") String author) {
         List<Book> books = bookService.findAllByAuthor(author);
-        if (books.isEmpty())
+        if (books.isEmpty()) {
             //throw new ResourceNotFoundException("There are no books by author: " + author + ".");
+            log.info("There are no books by the author {} to be fetched.", author);
             return ResponseEntity.notFound().build();
+        }
+        log.info("Books by the author {} are fetched.", author);
         return ResponseEntity.ok(books
                 .stream()
                 .map(book -> bookConverter.convertToDto(book))
@@ -90,8 +103,10 @@ public class BookController {
     public ResponseEntity<Void> deleteBook(@PathVariable("id") Long id) {
         try {
             bookService.delete(id);
+            log.info("User with ID {} successfully deleted.", id);
             return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
         } catch (RentedCopiesException exception) {
+            log.info("Book with ID {} has copies that are rented and therefore can't be deleted.", id);
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "There are rented copies of this book, so it can't be deleted.");
         }
     }
