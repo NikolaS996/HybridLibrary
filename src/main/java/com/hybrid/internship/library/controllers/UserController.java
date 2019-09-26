@@ -5,6 +5,7 @@ import com.hybrid.internship.library.dtos.UserDto;
 import com.hybrid.internship.library.exceptions.RentedCopiesException;
 import com.hybrid.internship.library.models.User;
 import com.hybrid.internship.library.services.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
+@Slf4j
 @RequestMapping("/api/user")
 public class UserController {
 
@@ -34,8 +36,11 @@ public class UserController {
     @GetMapping("")
     public ResponseEntity<List<UserDto>> getAllUsers() {
         List<User> users = userService.findAll();
-        if (users.isEmpty())
+        if (users.isEmpty()) {
+            log.info("Currently there are no users to fetch.");
             return ResponseEntity.notFound().build();
+        }
+        log.info("Users are fetched");
         return ResponseEntity.ok(
                 users.stream()
                         .map(user -> userConverter.convertToDto(user))
@@ -46,14 +51,21 @@ public class UserController {
     @GetMapping("/id/{id}")
     public ResponseEntity<UserDto> getUserById(@PathVariable("id") Long id) {
         return userService.findById(id)
-                .map(user -> ResponseEntity.ok(userConverter.convertToDto(user)))
-                .orElse(ResponseEntity.notFound().build());
+                .map(user -> {
+                    log.info("User {} is fetched.", user);
+                    return ResponseEntity.ok(userConverter.convertToDto(user));
+                })
+                .orElse(ResponseEntity.notFound()
+                        .build());
     }
 
     @GetMapping("username/{username}")
     public ResponseEntity<UserDto> getUserByUsername(@PathVariable("username") String username) {
         return userService.findByUsername(username)
-                .map(user -> ResponseEntity.ok(userConverter.convertToDto(user)))
+                .map(user -> {
+                    log.info("User {} is fetched", user);
+                    return ResponseEntity.ok(userConverter.convertToDto(user));
+                })
                 .orElse(ResponseEntity.notFound().build());
     }
 

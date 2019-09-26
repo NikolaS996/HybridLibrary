@@ -6,6 +6,7 @@ import com.hybrid.internship.library.repositories.BookRepository;
 import com.hybrid.internship.library.services.BookCopyService;
 import com.hybrid.internship.library.services.BookRentalService;
 import com.hybrid.internship.library.services.BookService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Slf4j
 @Transactional
 public class BookServiceImpl implements BookService {
 

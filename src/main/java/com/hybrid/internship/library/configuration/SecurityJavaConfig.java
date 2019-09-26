@@ -65,7 +65,7 @@ public class SecurityJavaConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/api/book-rental/rent-book").authenticated()
                 .antMatchers(HttpMethod.PUT, "/api/book-rental/return-book").authenticated()
                 .antMatchers(HttpMethod.DELETE, "/api/book-rental/**").hasRole("ADMIN")
-                //.antMatchers("/swagger-ui.html").permitAll()
+                .antMatchers("/swagger-ui.html").permitAll()
 
 
 //                .antMatchers(HttpMethod.GET,"/api/book-rental/most-rented/**").hasRole("ADMIN")

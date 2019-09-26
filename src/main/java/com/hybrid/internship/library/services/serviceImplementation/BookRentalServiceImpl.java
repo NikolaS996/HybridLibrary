@@ -74,7 +74,7 @@ public class BookRentalServiceImpl implements BookRentalService {
     }
 
     @Override
-    public List<BookRental> findAllByUserIdAndIsRented(Long id, Boolean bool) {
+    public List<BookRental> findAllByUserIdAndIsReturned(Long id, Boolean bool) {
         return bookRentalRepository.findAllByUserIdAndIsReturned(id, bool);
     }
 
