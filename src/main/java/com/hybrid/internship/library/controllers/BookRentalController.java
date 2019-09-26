@@ -30,7 +30,6 @@ public class BookRentalController {
             log.info("Currently there are no book rentals to fetch.");
             return ResponseEntity.notFound().build();
         }
-        //throw new ResourceNotFoundException("There are no book rentals.");
         log.info("Book rentals are fetched.");
         return ResponseEntity.ok(bookRentals
                 .stream()
@@ -46,7 +45,6 @@ public class BookRentalController {
                     return ResponseEntity.ok(bookRentalConverter.convertToDto(bookRental));
                 })
                 .orElse(ResponseEntity.notFound().build());
-        //.orElseThrow(() -> new ResourceNotFoundException("There is no book rental with ID: " + id + "."));
     }
 
     @GetMapping("/user-id/{id}")
@@ -56,7 +54,6 @@ public class BookRentalController {
             log.info("User with ID {} hasn't rented any books.", id);
             return ResponseEntity.notFound().build();
         }
-        //throw new ResourceNotFoundException("There are no book rentals made by user whose ID is: " + id + ".");
         log.info("Book rentals made by user with ID {} are fetched.", id);
         return ResponseEntity.ok(bookRentals
                 .stream()
@@ -71,7 +68,6 @@ public class BookRentalController {
             log.info("There are no rentals of the book with ID {} to be fetched.", id);
             return ResponseEntity.notFound().build();
         }
-        //throw new ResourceNotFoundException("There are rentals of book whose ID is: " + id + ".");
         log.info("Rentals of the book with ID {} are fetched.", id);
         return ResponseEntity.ok(bookRentals
                 .stream()
@@ -86,7 +82,6 @@ public class BookRentalController {
             log.info("There isn't any book to be fetched as the most rented one.");
             return ResponseEntity.notFound().build();
         }
-        //throw new ResourceNotFoundException("There aren't any rented books");
         log.info("Most rented book {} is fetched.", mostRentedBook);
         return ResponseEntity.ok(mostRentedBook);
     }
@@ -98,7 +93,6 @@ public class BookRentalController {
             log.info("There aren't any rented books that should be returned, but aren't.");
             return ResponseEntity.notFound().build();
         }
-        //throw new ResourceNotFoundException("There aren't any overdue book returns");
         log.info("Overdue book returns {} are fetched.", overdueBookRentals);
         return ResponseEntity.ok(overdueBookRentals
                 .stream()

@@ -14,7 +14,7 @@ public interface AbstractService<E, P>{
 
     E update(E e);
 
-    void delete(P id); //void?
+    void delete(P id);
 
     boolean exists(P id);
 

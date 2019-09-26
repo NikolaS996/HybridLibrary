@@ -47,11 +47,6 @@ public class BookCopyServiceImpl implements BookCopyService {
     }
 
     @Override
-    public int totalCopiesByBookId(Long id) {
-        return bookCopyRepository.totalCopiesByBookId(id);
-    }
-
-    @Override
     public void delete(Long id) {
         bookCopyRepository.deleteById(id);
         log.info("Book copy with ID {} is successfully deleted.", id);

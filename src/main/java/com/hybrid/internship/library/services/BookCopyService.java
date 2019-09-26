@@ -8,8 +8,6 @@ public interface BookCopyService extends AbstractService<BookCopy, Long> {
 
     List<BookCopy> findAllByBookId(Long id);
 
-    int totalCopiesByBookId(Long id);
-
     void deleteAllByBookId(Long id);
 
 }

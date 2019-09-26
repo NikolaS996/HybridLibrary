@@ -52,8 +52,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Boolean isUsernameAvailableForUpdate(String username, Long id) {
-        if(userRepository.findByUsernameForUpdate(username, id).orElseGet(() -> null) == null) {
-            //log.info("Username {} is available for the update", username);
+        if (userRepository.findByUsernameForUpdate(username, id).orElseGet(() -> null) == null) {
             return true;
         }
         return false;
@@ -61,7 +60,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User create(User user) {
-        if(isUsernameAvailable(user.getUsername())) {
+        if (isUsernameAvailable(user.getUsername())) {
             User savedUser = userRepository.save(user);
             log.info("User {} is created.", savedUser);
             return savedUser;

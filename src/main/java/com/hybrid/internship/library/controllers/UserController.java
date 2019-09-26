@@ -71,7 +71,6 @@ public class UserController {
 
     @PostMapping("")
     public ResponseEntity createUser(@RequestBody UserDto userDto) {
-        //user.setPassword(hashPassword(user.getPassword()));
         User convertedUser = userConverter.convertToEntity(userDto);
         convertedUser = userService.create(convertedUser);
         if (convertedUser == null)
@@ -82,14 +81,9 @@ public class UserController {
     @PostMapping("/create-password/{id}")
     public ResponseEntity createPassword(@PathVariable("id") Long id, @RequestBody String password) {
         User user = userService.findById(id).orElseGet(() -> null);
-//        if (user == null || user.getPassword() != null) {
-//            log.info("");
-//            return ResponseEntity.notFound().build();
-//        }
-        if(user == null)
-        {
+        if (user == null) {
             log.info("User with ID {} wasn't found.", id);
-            if(user.getPassword() != null){
+            if (user.getPassword() != null) {
                 log.info("User with ID {} already has password set.", id);
             }
             return ResponseEntity.badRequest().build();

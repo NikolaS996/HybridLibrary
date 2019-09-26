@@ -5,7 +5,7 @@ import com.hybrid.internship.library.models.BookRental;
 
 import java.util.List;
 
-public interface BookRentalService extends AbstractService<BookRental, Long>{
+public interface BookRentalService extends AbstractService<BookRental, Long> {
 
     List<BookRental> findAllByUserId(Long id);
 
@@ -20,6 +20,5 @@ public interface BookRentalService extends AbstractService<BookRental, Long>{
     int rentedCopies(Long id);
 
     Boolean availability(Long id);
-
-    //List<BookRental> isRented(Long id);
 }
+

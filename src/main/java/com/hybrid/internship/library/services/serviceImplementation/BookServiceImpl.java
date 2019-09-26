@@ -73,4 +73,5 @@ public class BookServiceImpl implements BookService {
     public boolean exists(Long id) {
         return bookRepository.existsById(id);
     }
+
 }

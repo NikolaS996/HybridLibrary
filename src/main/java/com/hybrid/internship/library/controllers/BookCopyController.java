@@ -28,8 +28,7 @@ public class BookCopyController {
     @GetMapping()
     public ResponseEntity<List<BookCopyDto>> getAllBookCopies() {
         List<BookCopy> bookCopies = bookCopyService.findAll();
-        if(bookCopies.isEmpty()) {
-            //throw new ResourceNotFoundException("There are no book copies");
+        if (bookCopies.isEmpty()) {
             log.info("Currently there are no book copies to fetch.");
             return ResponseEntity.notFound().build();
         }
@@ -50,22 +49,15 @@ public class BookCopyController {
                     return ResponseEntity.ok(converter.convertToDto(bookCopy));
                 })
                 .orElse(ResponseEntity.notFound().build());
-                //.orElseThrow(() -> new ResourceNotFoundException("Book copy with ID: " + id + " not found."));
-        //return bookCopyService.findById(id);
-        //}
-        //catch(BookCopyNotFoundException exception){
-        //   return
-        //}
     }
 
     @GetMapping("/book-id/{id}")
     public ResponseEntity<List<BookCopyDto>> getBookCopiesByBookId(@PathVariable("id") Long id) {
         List<BookCopy> bookCopies = bookCopyService.findAllByBookId(id);
-        if(bookCopies.isEmpty()) {
+        if (bookCopies.isEmpty()) {
             log.info("There are no copies of the book with ID {} to be fetched.", id);
             return ResponseEntity.notFound().build();
         }
-            //throw new ResourceNotFoundException("There are no copies of the book whose ID is: " + id + ".");
         return ResponseEntity.ok(bookCopies
                 .stream()
                 .map(bookCopy -> converter.convertToDto(bookCopy))
