@@ -36,7 +36,6 @@ public class User extends AbstractModel{
     private String email;
 
     @Column
-    //@NotBlank
     private String role;
 
     @OneToMany(mappedBy = "user")

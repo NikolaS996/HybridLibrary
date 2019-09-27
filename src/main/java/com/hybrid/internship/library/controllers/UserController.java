@@ -33,7 +33,7 @@ public class UserController {
     @Autowired
     InMemoryUserDetailsManager inMemoryUserDetailsManager;
 
-    @GetMapping("")
+    @GetMapping
     public ResponseEntity<List<UserDto>> getAllUsers() {
         List<User> users = userService.findAll();
         if (users.isEmpty()) {
@@ -69,7 +69,7 @@ public class UserController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @PostMapping("")
+    @PostMapping
     public ResponseEntity createUser(@RequestBody UserDto userDto) {
         User convertedUser = userConverter.convertToEntity(userDto);
         convertedUser = userService.create(convertedUser);
@@ -101,7 +101,7 @@ public class UserController {
         return ResponseEntity.ok(userConverter.convertToDto(user));
     }
 
-    @PutMapping("")
+    @PutMapping
     public ResponseEntity updateUser(@RequestBody UserDto userDto) {
         User convertedUser = userConverter.convertToEntity(userDto);
         convertedUser = userService.update(convertedUser);

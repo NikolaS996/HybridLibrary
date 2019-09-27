@@ -25,7 +25,7 @@ public class BookCopyController {
     @Autowired
     private BookCopyService bookCopyService;
 
-    @GetMapping()
+    @GetMapping
     public ResponseEntity<List<BookCopyDto>> getAllBookCopies() {
         List<BookCopy> bookCopies = bookCopyService.findAll();
         if (bookCopies.isEmpty()) {
@@ -65,7 +65,7 @@ public class BookCopyController {
         );
     }
 
-    @PostMapping()
+    @PostMapping
     public ResponseEntity<BookCopyDto> createBookCopy(@RequestBody BookCopyDto bookCopyDto) {
         BookCopy convertedBookCopy = converter.convertToEntity(bookCopyDto);
         return ResponseEntity.ok(converter.convertToDto(bookCopyService.create(convertedBookCopy)));

@@ -1,4 +1,4 @@
-package com.hybrid.internship.library.services.serviceImplementation;
+package com.hybrid.internship.library.services.impl;
 
 import com.hybrid.internship.library.exceptions.RentedCopiesException;
 import com.hybrid.internship.library.models.User;
@@ -52,10 +52,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Boolean isUsernameAvailableForUpdate(String username, Long id) {
-        if (userRepository.findByUsernameForUpdate(username, id).orElseGet(() -> null) == null) {
-            return true;
-        }
-        return false;
+        return userRepository.findByUsernameForUpdate(username, id).isPresent();
     }
 
     @Override

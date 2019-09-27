@@ -27,7 +27,7 @@ public class BookController {
     private BookService bookService;
 
 
-    @GetMapping()
+    @GetMapping
     public ResponseEntity<List<BookDto>> getAllBooks() {
         List<Book> books = bookService.findAll();
         if (books.isEmpty()) {
@@ -83,13 +83,13 @@ public class BookController {
 
     }
 
-    @PostMapping()
+    @PostMapping
     public ResponseEntity<BookDto> createBook(@RequestBody BookDto bookDto) {
         Book convertedBook = bookConverter.convertToEntity(bookDto);
         return ResponseEntity.ok(bookConverter.convertToDto(bookService.create(convertedBook)));
     }
 
-    @PutMapping()
+    @PutMapping
     public ResponseEntity<BookDto> updateBook(@RequestBody BookDto bookDto) {
         Book convertedBook = bookConverter.convertToEntity(bookDto);
         return ResponseEntity.ok(bookConverter.convertToDto(bookService.create(convertedBook)));
@@ -100,7 +100,7 @@ public class BookController {
         try {
             bookService.delete(id);
             log.info("User with ID {} successfully deleted.", id);
-            return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (RentedCopiesException exception) {
             log.info("Book with ID {} has copies that are rented and therefore can't be deleted.", id);
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "There are rented copies of this book, so it can't be deleted.");

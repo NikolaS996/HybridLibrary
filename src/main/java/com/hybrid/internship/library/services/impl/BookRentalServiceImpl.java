@@ -1,12 +1,13 @@
-package com.hybrid.internship.library.services.serviceImplementation;
+package com.hybrid.internship.library.services.impl;
 
 import com.hybrid.internship.library.dtos.BookRentalCountDto;
 import com.hybrid.internship.library.models.BookRental;
 import com.hybrid.internship.library.repositories.BookRentalRepository;
 import com.hybrid.internship.library.services.BookCopyService;
 import com.hybrid.internship.library.services.BookRentalService;
+
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,10 +17,13 @@ import java.util.Optional;
 @Slf4j
 public class BookRentalServiceImpl implements BookRentalService {
 
-    @Autowired
-    private BookRentalRepository bookRentalRepository;
-    @Autowired
-    private BookCopyService bookCopyService;
+    private final BookRentalRepository bookRentalRepository;
+    private final BookCopyService bookCopyService;
+
+    public BookRentalServiceImpl(BookRentalRepository bookRentalRepository, BookCopyService bookCopyService) {
+        this.bookRentalRepository = bookRentalRepository;
+        this.bookCopyService = bookCopyService;
+    }
 
     @Override
     public List<BookRental> findAll() {

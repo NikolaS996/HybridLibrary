@@ -15,7 +15,6 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import java.util.Properties;
 
 @Configuration
-//@EnableGlobalMethodSecurity(prePostEnabled=true)
 @EnableWebSecurity
 public class SecurityJavaConfig extends WebSecurityConfigurerAdapter {
 
@@ -24,15 +23,6 @@ public class SecurityJavaConfig extends WebSecurityConfigurerAdapter {
 
     public SecurityJavaConfig(UserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
-    }
-
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
-                .withUser("admin").password(passwordEncoder().encode("admin")).roles("ADMIN")
-                .and()
-                .withUser("nikolasavic").password(passwordEncoder().encode("sifra")).roles("USER");
-        auth.userDetailsService(inMemoryUserDetailsManager());
     }
 
     protected void configure(HttpSecurity httpSecurity) throws Exception {
@@ -67,12 +57,11 @@ public class SecurityJavaConfig extends WebSecurityConfigurerAdapter {
 
     }
 
-    @Bean
-    public InMemoryUserDetailsManager inMemoryUserDetailsManager(){
-        final Properties users = new Properties();
-        users.put("user","pass,ROLE_USER,enabled");
-        return new InMemoryUserDetailsManager(users);
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }
+
 
     @Bean
     public PasswordEncoder passwordEncoder() {

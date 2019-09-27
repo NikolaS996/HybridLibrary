@@ -1,4 +1,4 @@
-package com.hybrid.internship.library.services.serviceImplementation;
+package com.hybrid.internship.library.services.impl;
 
 import com.hybrid.internship.library.models.BookCopy;
 import com.hybrid.internship.library.repositories.BookCopyRepository;
